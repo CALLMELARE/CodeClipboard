@@ -27,6 +27,7 @@ body {
   background-clip: text;
   font-weight: bold;
   line-height: 32px;
+  user-select: none;
 }
 
 .cc-header .func {

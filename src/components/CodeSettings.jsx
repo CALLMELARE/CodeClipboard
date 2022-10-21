@@ -1,5 +1,11 @@
-import { Form, SideSheet, Button, Notification } from "@douyinfe/semi-ui";
-import { IconDelete } from "@douyinfe/semi-icons";
+import {
+  Form,
+  SideSheet,
+  Button,
+  Toast,
+  Popconfirm,
+} from "@douyinfe/semi-ui";
+import { IconDelete, IconGithubLogo } from "@douyinfe/semi-icons";
 import { useEffect, useState } from "react";
 import { getAllCfg, setCfg } from "../utils/setting";
 import { getLocalStorage, setLocalStorage } from "../utils/storage";
@@ -32,11 +38,7 @@ const CodeSettings = (props) => {
 
   const clearCodeData = () => {
     setLocalStorage("data", "[]");
-    Notification.success({
-      title: "清空成功",
-      content: "已清空全部数据",
-      duration: 2,
-    });
+    Toast.success('数据已清空');
   };
 
   return (
@@ -59,12 +61,25 @@ const CodeSettings = (props) => {
             <Form.Radio value="triple">三列</Form.Radio>
           </Form.RadioGroup>
           <Form.Slot label="数据管理">
-            <Button
-              type="danger"
-              icon={<IconDelete />}
-              onClick={clearCodeData}
+            <Popconfirm
+              title="确定是否清空数据"
+              content="此操作不可逆"
+              onConfirm={clearCodeData}
             >
-              清除数据
+              <Button type="danger" icon={<IconDelete />}>
+                清除数据
+              </Button>
+            </Popconfirm>
+          </Form.Slot>
+          <Form.Slot label="关于">
+            <Button
+              onClick={() => {
+                window.open("https://github.com/CALLMELARE/CodeClipboard");
+              }}
+              icon={<IconGithubLogo />}
+              type="tertiary"
+            >
+              Github
             </Button>
           </Form.Slot>
         </Form>
