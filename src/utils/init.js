@@ -10,6 +10,7 @@ const init = () => {
   if (!cfg || JSON.stringify(cfg) === "{}") {
     const cfg = {
       listType: "triple",
+      mode: "light",
     };
     setLocalStorage("config", cfg);
   }

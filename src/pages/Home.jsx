@@ -1,5 +1,10 @@
-import { Button, Layout, Progress } from "@douyinfe/semi-ui";
-import { IconServer, IconSetting, IconPlus } from "@douyinfe/semi-icons";
+import { Empty, Button, Layout, Progress } from "@douyinfe/semi-ui";
+import {
+  IconServer,
+  IconSetting,
+  IconPlus,
+  IconInfoCircle,
+} from "@douyinfe/semi-icons";
 import { useEffect, useState } from "react";
 import {
   getLocalStorageVolume,
@@ -10,7 +15,7 @@ import CodeList from "../components/CodeList";
 import CodeMatrix from "../components/CodeMatrix";
 import CodeEdit from "../components/CodeEdit";
 import CodeSettings from "../components/CodeSettings";
-
+import { IllustrationNoResult } from "@douyinfe/semi-illustrations";
 const { Header, Footer, Content } = Layout;
 
 const Home = () => {
@@ -57,6 +62,31 @@ const Home = () => {
     setShowSetting(false);
   };
 
+  const CustomEmpty = () => {
+    return (
+      <Empty
+        image={<IllustrationNoResult style={{ width: 150, height: 150 }} />}
+        title="目前空空如也"
+      >
+        <Button
+          onClick={handleShowAdd}
+          style={{ padding: "6px 24px" }}
+          icon={<IconPlus />}
+          theme="solid"
+          type="primary"
+        >
+          创建片段
+        </Button>
+        <Button
+          style={{ marginLeft: "8px", padding: "6px 24px", marginRight: 12 }}
+          type="primary"
+        >
+          阅读指南
+        </Button>
+      </Empty>
+    );
+  };
+
   return (
     <Layout>
       <Header className="cc-header">
@@ -82,7 +112,12 @@ const Home = () => {
         </span>
       </Header>
       <Content style={{ padding: "16px" }}>
-        <CodeMatrix key="matrix" dataSource={data} listType={listType} />
+        <CodeMatrix
+          key="matrix"
+          dataSource={data}
+          listType={listType}
+          Empty={CustomEmpty}
+        />
       </Content>
       <Footer className="cc-footer"></Footer>
       <CodeEdit visible={showAdd} close={handleCloseAdd} />

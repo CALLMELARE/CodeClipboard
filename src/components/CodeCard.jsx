@@ -29,7 +29,7 @@ const CodeCard = ({
   const copyToClipboard = (data) => {
     if (data) {
       copy(data);
-      const thumbnail = data.length > 40 ? data.substring(0, 37) + "..." : data;
+      const thumbnail = data.length > 20 ? data.substring(0, 17) + "..." : data;
       Notification.success({
         title: "复制成功",
         content: thumbnail,

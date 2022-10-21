@@ -1,8 +1,9 @@
+import {} from "@douyinfe/semi-ui";
 import { useEffect, useState } from "react";
 import { parse } from "../utils/compiler";
 import CodeCard from "./CodeCard";
 
-const CodeMatrix = ({ dataSource, listType }) => {
+const CodeMatrix = ({ dataSource, listType, Empty }) => {
   const Cols = (listType) => {
     switch (listType) {
       case "single":
@@ -17,6 +18,7 @@ const CodeMatrix = ({ dataSource, listType }) => {
   };
 
   const renderCards = (data) => {
+    console.log(data);
     return (
       data &&
       data.map((item, index) => {
@@ -26,9 +28,15 @@ const CodeMatrix = ({ dataSource, listType }) => {
   };
 
   return (
-    <div style={{ display: "grid", gridTemplateColumns: Cols(listType) }}>
-      {renderCards(dataSource)}
-    </div>
+    <>
+      {dataSource && dataSource.length ? (
+        <div style={{ display: "grid", gridTemplateColumns: Cols(listType) }}>
+          {renderCards(dataSource)}
+        </div>
+      ) : (
+        <Empty />
+      )}
+    </>
   );
 };
 
