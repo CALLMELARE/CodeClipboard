@@ -3,30 +3,27 @@ import { getLocalStorage, setLocalStorage } from "./storage";
 import UUID from "uuidjs";
 
 // 创建
-const create = ({ title, content, updated, created, locked, language }) => {
+const create = (v) => {
+  const uuid = UUID.generate();
   // 检查是否重复
-  check.then((res) => {
-    if (!res)
+  check(uuid).then((res) => {
+    if (!res) {
       return new Promise((resolve, reject) => {
         const raw = getLocalStorage("data");
         const obj = {
-          id: UUID.generate(),
-          title,
-          content,
-          updated,
-          created,
-          locked,
-          language,
+          id: uuid,
+          ...v,
         };
         const result = [...raw, compile(obj)];
         setLocalStorage("data", result);
         resolve({ msg: "创建成功" });
       });
+    }
   });
 };
 
 // 修改
-const modify = ({ id, title, content, updated, created, locked, language }) => {
+const modify = (v) => {
   return new Promise((resolve, reject) => {
     const raw = getLocalStorage("data");
     let data = parse(raw);
@@ -38,7 +35,7 @@ const modify = ({ id, title, content, updated, created, locked, language }) => {
       }
     }
     if (index) {
-      const obj = { id, title, content, updated, created, locked, language };
+      const obj = { ...v };
       data[index] = obj;
       const result = [compile(data)];
       setLocalStorage("data", result);
@@ -50,7 +47,7 @@ const modify = ({ id, title, content, updated, created, locked, language }) => {
 };
 
 // 检查
-const check = ({ id }) => {
+const check = (id) => {
   return new Promise((resolve, reject) => {
     const raw = getLocalStorage("data");
     const data = parse(raw);
