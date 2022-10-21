@@ -3,7 +3,7 @@ import {
   IconServer,
   IconSetting,
   IconPlus,
-  IconInfoCircle,
+  IconHelpCircle,
 } from "@douyinfe/semi-icons";
 import { useEffect, useState } from "react";
 import {
@@ -11,7 +11,7 @@ import {
   getLocalStorage,
   sizeFormat,
 } from "../utils/storage";
-import CodeHelp from "../components/CodeHelp";
+import CodeHelp from "../info/CodeHelp";
 import CodeMatrix from "../components/CodeMatrix";
 import CodeEdit from "../components/CodeEdit";
 import CodeSettings from "../components/CodeSettings";
@@ -89,9 +89,13 @@ const Home = () => {
           <span className="info">
             {sizeFormat(used)} / {sizeFormat(maxVolumn)}
           </span>
+          {data && data.length ? (
+            <Button icon={<IconHelpCircle />} onClick={() => setShowHelp(true)} theme="borderless">
+              
+            </Button>
+          ) : null}
           <Button
             theme="borderless"
-            style={{ marginLeft: "8px" }}
             onClick={() => setShowSetting(true)}
             icon={<IconSetting />}
           ></Button>

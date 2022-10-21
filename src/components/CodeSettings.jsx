@@ -4,19 +4,27 @@ import {
   Button,
   Toast,
   Popconfirm,
+  Collapsible,
 } from "@douyinfe/semi-ui";
 import { IconDelete, IconGithubLogo } from "@douyinfe/semi-icons";
 import { useEffect, useState } from "react";
 import { getAllCfg, setCfg } from "../utils/setting";
 import { getLocalStorage, setLocalStorage } from "../utils/storage";
+import CodeOS from "../info/CodeOS";
 
 const CodeSettings = (props) => {
   const [config, setConfig] = useState();
+  const [isOpen, setOpen] = useState(false);
+
   useEffect(() => {
     getAllCfg().then((res) => {
       setConfig(res);
     });
   }, [props]);
+
+  const toggle = () => {
+    setOpen(!isOpen);
+  };
 
   const handleChange = (value) => {
     const { listType, mode } = value;
@@ -38,7 +46,7 @@ const CodeSettings = (props) => {
 
   const clearCodeData = () => {
     setLocalStorage("data", "[]");
-    Toast.success('数据已清空');
+    Toast.success("数据已清空");
   };
 
   return (
@@ -81,6 +89,16 @@ const CodeSettings = (props) => {
             >
               Github
             </Button>
+            <Button
+              onClick={toggle}
+              style={{ marginLeft: "8px" }}
+              type="tertiary"
+            >
+              开源软件
+            </Button>
+            <Collapsible isOpen={isOpen}>
+              <CodeOS />
+            </Collapsible>
           </Form.Slot>
         </Form>
 
