@@ -51,7 +51,7 @@ const Home = () => {
     return (
       <Empty
         image={<IllustrationNoResult style={{ width: 150, height: 150 }} />}
-        title="目前空空如也"
+        title="空空如也"
       >
         <Button
           onClick={() => setShowAdd(true)}
