@@ -11,12 +11,12 @@ const CodeEdit = (props) => {
   const customFooter = () => {
     let btns = [];
     const cancel = (
-      <Button type="tertiary" theme="borderless" onClick={onClose}>
+      <Button key="cancel" type="tertiary" theme="borderless" onClick={onClose}>
         取消
       </Button>
     );
     const save = (
-      <Button theme="borderless" onClick={onSave}>
+      <Button key="save" theme="borderless" onClick={onSave}>
         保存
       </Button>
     );
@@ -30,7 +30,7 @@ const CodeEdit = (props) => {
     props.close();
   };
 
-  const onSave = (data) => {
+  const onSave = () => {
     save();
     onClose();
   };

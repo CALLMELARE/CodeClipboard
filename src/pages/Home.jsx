@@ -9,6 +9,7 @@ import {
 import CodeList from "../components/CodeList";
 import CodeMatrix from "../components/CodeMatrix";
 import CodeEdit from "../components/CodeEdit";
+import CodeSettings from "../components/CodeSettings";
 
 const { Header, Footer, Content } = Layout;
 
@@ -19,6 +20,7 @@ const Home = () => {
   const [listType, setListType] = useState("");
   const [data, setData] = useState();
   const [showAdd, setShowAdd] = useState(false);
+  const [showSetting, setShowSetting] = useState(false);
 
   // 更新用量
   setInterval(() => {
@@ -37,7 +39,7 @@ const Home = () => {
     const p = (used / maxVolumn) * 100;
     setUsed(used);
     setPercent(p);
-  }, [maxVolumn, used]);
+  }, [maxVolumn, used, showSetting]);
 
   const handleShowAdd = () => {
     setShowAdd(true);
@@ -47,20 +49,26 @@ const Home = () => {
     setShowAdd(false);
   };
 
+  const handleShowSetting = () => {
+    setShowSetting(true);
+  };
+
+  const handleCloseSetting = () => {
+    setShowSetting(false);
+  };
+
   return (
     <Layout>
       <Header className="cc-header">
-        <span className="logo">
-          Code Clipboard
+        <span className="logo">Code Clipboard</span>
+        <span className="func">
           <Button
             theme="borderless"
-            style={{ marginLeft: "8px" }}
+            style={{ marginRight: "8px" }}
             onClick={handleShowAdd}
             icon={<IconPlus />}
           ></Button>
-        </span>
-        <span className="func">
-          <IconServer style={{ color: "#a9a9a9", marginRight: "8px" }} />
+          <IconServer style={{ marginRight: "8px" }} />
           <Progress className="progress" size="large" percent={percent} />
           <span className="info">
             {sizeFormat(used)} / {sizeFormat(maxVolumn)}
@@ -68,16 +76,17 @@ const Home = () => {
           <Button
             theme="borderless"
             style={{ marginLeft: "8px" }}
-            icon={<IconSetting style={{ color: "#a9a9a9" }} />}
+            onClick={handleShowSetting}
+            icon={<IconSetting />}
           ></Button>
         </span>
       </Header>
-      <Content>
-        {listType === "list" ? <CodeList dataSource={data} /> : null}
-        {listType === "matrix" ? <CodeMatrix dataSource={data} /> : null}
+      <Content style={{ padding: "16px" }}>
+        <CodeMatrix key="matrix" dataSource={data} listType={listType} />
       </Content>
-      <Footer className="cc-footer">Code Clipboard</Footer>
+      <Footer className="cc-footer"></Footer>
       <CodeEdit visible={showAdd} close={handleCloseAdd} />
+      <CodeSettings visible={showSetting} close={handleCloseSetting} />
     </Layout>
   );
 };

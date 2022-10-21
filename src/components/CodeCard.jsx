@@ -27,20 +27,27 @@ const CodeCard = ({
   };
 
   const copyToClipboard = (data) => {
-    copy(data);
-    const thumbnail = data.length > 40 ? data.substring(0, 37) + "..." : data;
-    Notification.success({
-      title: "复制成功",
-      content: thumbnail,
-      duration: 2,
-    });
+    if (data) {
+      copy(data);
+      const thumbnail = data.length > 40 ? data.substring(0, 37) + "..." : data;
+      Notification.success({
+        title: "复制成功",
+        content: thumbnail,
+        duration: 2,
+      });
+    } else {
+      Notification.error({
+        title: "复制失败",
+        duration: 2,
+      });
+    }
   };
 
   return (
     <>
       <div className="cc-card">
         <div className="header">
-          <span className="title">
+          <span className="title" onClick={handleShowEdit}>
             {title}
             {/* <Tag
               style={{
@@ -61,7 +68,7 @@ const CodeCard = ({
             ></Button>
           </span>
         </div>
-        <div className="content" onClick={handleShowEdit}>
+        <div className="content" >
           {content}
         </div>
       </div>

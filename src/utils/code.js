@@ -22,19 +22,22 @@ const create = (v) => {
 const modify = (v) => {
   return new Promise((resolve, reject) => {
     const raw = getLocalStorage("data");
-    let data = parse(raw);
+    let data = raw.map((item, index) => {
+      return item
+    });
     let index = null;
     for (let item in data) {
-      if (data[item].id === v.id) {
+      if (data[item].i === v.id) {
         index = item;
+        console.log(index)
         break;
       }
     }
     if (index) {
       const obj = { ...v };
       console.log("modify:", obj);
-      data[index] = obj;
-      const result = [compile(data)];
+      data[index] = compile(obj);
+      const result = data;
       setLocalStorage("data", result);
       resolve("修改成功");
     } else {

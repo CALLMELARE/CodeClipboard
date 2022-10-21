@@ -9,7 +9,7 @@ const init = () => {
   const data = getLocalStorage("data");
   if (!cfg || JSON.stringify(cfg) === "{}") {
     const cfg = {
-      listType: "matrix",
+      listType: "triple",
     };
     setLocalStorage("config", cfg);
   }
