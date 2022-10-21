@@ -14,7 +14,15 @@ const CodeMatrix = ({ dataSource }) => {
     });
   };
 
-  return <>{renderCards()}</>;
+  return (
+    <>
+      <CodeCard
+        title="test"
+        content="arr.includes(searchElement [, fromIndex])"
+        language="JavaScript"
+      />
+    </>
+  );
 };
 
 export default CodeMatrix;

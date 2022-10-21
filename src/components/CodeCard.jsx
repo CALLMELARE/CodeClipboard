@@ -5,39 +5,25 @@ import { languages } from "../utils/constant";
 import { useState } from "react";
 import CodeEdit from "./CodeEdit";
 
-const CodeCard = ({ title, content, updated, created, locked, language }) => {
+const CodeCard = ({
+  id,
+  title,
+  content,
+  updated,
+  created,
+  locked,
+  language,
+}) => {
   const [showEdit, setShowEdit] = useState(false);
 
   const lang = languages[language];
 
-  const customFooter = () => {
-    let btns = [];
-    const cancel = (
-      <Button type="tertiary" theme="borderless" onClick={onClose}>
-        取消
-      </Button>
-    );
-    const save = (
-      <Button theme="borderless" onClick={onSave}>
-        保存
-      </Button>
-    );
-    btns.push(cancel);
-    btns.push(save);
-
-    return btns;
-  };
-
-  const onClose = () => {
-    setShowEdit(false);
-  };
-
-  const onSave = () => {
-    onClose();
-  };
-
   const handleShowEdit = () => {
     setShowEdit(true);
+  };
+
+  const handleCloseEdit = () => {
+    setShowEdit(false);
   };
 
   const copyToClipboard = (data) => {
@@ -79,17 +65,18 @@ const CodeCard = ({ title, content, updated, created, locked, language }) => {
           {content}
         </div>
       </div>
-      {showEdit ? (
-        <Modal
-          title={`正在编辑：${title}`}
-          visible={showEdit}
-          onCancel={onClose}
-          closeOnEsc={true}
-          footer={customFooter()}
-        >
-          <CodeEdit />
-        </Modal>
-      ) : null}
+
+      <CodeEdit
+        visible={showEdit}
+        close={handleCloseEdit}
+        id={id}
+        title={title}
+        content={content}
+        updated={updated}
+        created={created}
+        locked={locked}
+        language={language}
+      />
     </>
   );
 };

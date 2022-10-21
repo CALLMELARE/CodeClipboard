@@ -4,21 +4,17 @@ import UUID from "uuidjs";
 
 // 创建
 const create = (v) => {
-  const uuid = UUID.generate();
-  // 检查是否重复
-  check(uuid).then((res) => {
-    if (!res) {
-      return new Promise((resolve, reject) => {
-        const raw = getLocalStorage("data");
-        const obj = {
-          id: uuid,
-          ...v,
-        };
-        const result = [...raw, compile(obj)];
-        setLocalStorage("data", result);
-        resolve({ msg: "创建成功" });
-      });
-    }
+  return new Promise((resolve, reject) => {
+    const uuid = UUID.generate();
+    const raw = getLocalStorage("data"); // []
+    const obj = {
+      ...v,
+    };
+    obj.id = uuid;
+    console.log("create:", obj);
+    const result = raw.concat(compile(obj));
+    setLocalStorage("data", result);
+    resolve({ msg: "创建成功" });
   });
 };
 
@@ -29,13 +25,14 @@ const modify = (v) => {
     let data = parse(raw);
     let index = null;
     for (let item in data) {
-      if (data[item].id === id) {
+      if (data[item].id === v.id) {
         index = item;
         break;
       }
     }
     if (index) {
       const obj = { ...v };
+      console.log("modify:", obj);
       data[index] = obj;
       const result = [compile(data)];
       setLocalStorage("data", result);
@@ -51,15 +48,19 @@ const check = (id) => {
   return new Promise((resolve, reject) => {
     const raw = getLocalStorage("data");
     const data = parse(raw);
-    for (let item in data) {
-      if (data[item].id === id) {
-        resolve(id);
+    console.log(data);
+    if (data) {
+      for (let item in data) {
+        if (data[item].id === id) {
+          resolve(id);
+        }
       }
     }
     resolve();
   });
 };
 
+// 删除
 const remove = ({ id }) => {
   return new Promise((resolve, reject) => {
     const raw = getLocalStorage("data");

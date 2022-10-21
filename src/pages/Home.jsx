@@ -18,6 +18,11 @@ const Home = () => {
   const [listType, setListType] = useState("");
   const [data, setData] = useState();
 
+  // 更新用量
+  setInterval(() => {
+    setUsed(getLocalStorageVolume());
+  }, 3000);
+
   useEffect(() => {
     // 加载配置
     const cfg = getLocalStorage("config");
@@ -30,7 +35,7 @@ const Home = () => {
     const p = (used / maxVolumn) * 100;
     setUsed(used);
     setPercent(p);
-  }, [used, maxVolumn]);
+  }, [maxVolumn, used]);
 
   return (
     <Layout>

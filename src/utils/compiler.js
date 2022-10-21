@@ -1,6 +1,7 @@
 const compile = (data) => {
-  const { title, content, updated, created, locked, language } = data;
+  const { id, title, content, updated, created, locked, language } = data;
   const result = {
+    i: id,
     t: title,
     c: content,
     up: updated,
@@ -12,16 +13,19 @@ const compile = (data) => {
 };
 
 const parse = (data) => {
-  const { t, c, up, cr, l, la } = data;
-  const result = {
-    title: t,
-    content: c,
-    updated: up,
-    created: cr,
-    locked: l,
-    language: la,
-  };
-  return result;
+  if (data) {
+    const { i, t, c, up, cr, l, la } = data;
+    const result = {
+      id: i,
+      title: t,
+      content: c,
+      updated: up,
+      created: cr,
+      locked: l,
+      language: la,
+    };
+    return result;
+  }
 };
 
 export { compile, parse };
