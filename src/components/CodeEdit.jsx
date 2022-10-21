@@ -38,18 +38,16 @@ const CodeEdit = (props) => {
   const save = () => {
     if (!props.id) {
       // 新增
-
       create(data);
     } else {
       // 修改
-
       modify(data);
     }
   };
 
   return (
     <Modal
-      title={`正在编辑：${props.title}`}
+      title={props.id ? `正在编辑：${props.title}` : "创建"}
       visible={props.visible}
       onCancel={onClose}
       closeOnEsc={true}
