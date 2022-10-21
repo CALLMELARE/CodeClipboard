@@ -21,12 +21,12 @@ body {
 }
 
 .cc-header .logo {
-  font-size: 16px;
+  font-size: 20px;
   background: linear-gradient(to right, #00a0e9, #0066ff);
   color: transparent;
   background-clip: text;
   font-weight: bold;
-  line-height: 24px;
+  line-height: 32px;
 }
 
 .cc-header .func {
@@ -44,6 +44,23 @@ body {
   font-size: 12px;
   color: #a9a9a9;
   line-height: 24px;
+}
+
+.cc-card {
+  border: 1px solid rgba(28, 31, 35, 0.08);
+  border-radius: 6px;
+  margin: 8px;
+}
+
+.cc-card .header {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+}
+
+.cc-card .content {
+  padding: 8px;
+  cursor: pointer;
 }
 
 .cc-footer {

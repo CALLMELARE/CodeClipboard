@@ -1,7 +1,20 @@
 import CodeCard from "./CodeCard";
 
 const CodeMatrix = ({ dataSource }) => {
-  return <CodeCard title="" />;
+  const renderCards = (data) => {
+    return data.map((item, index) => {
+      const { title, content, updated, created, locked, language } = item;
+      return (
+        <CodeCard
+          title="test"
+          content="arr.includes(searchElement [, fromIndex])"
+          language="JavaScript"
+        />
+      );
+    });
+  };
+
+  return <>{renderCards()}</>;
 };
 
 export default CodeMatrix;
