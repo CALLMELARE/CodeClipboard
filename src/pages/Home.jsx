@@ -11,7 +11,7 @@ import {
   getLocalStorage,
   sizeFormat,
 } from "../utils/storage";
-import CodeList from "../components/CodeList";
+import CodeHelp from "../components/CodeHelp";
 import CodeMatrix from "../components/CodeMatrix";
 import CodeEdit from "../components/CodeEdit";
 import CodeSettings from "../components/CodeSettings";
@@ -26,6 +26,7 @@ const Home = () => {
   const [data, setData] = useState();
   const [showAdd, setShowAdd] = useState(false);
   const [showSetting, setShowSetting] = useState(false);
+  const [showHelp, setShowHelp] = useState(false);
 
   // 更新用量
   setInterval(() => {
@@ -46,22 +47,6 @@ const Home = () => {
     setPercent(p);
   }, [maxVolumn, used, showSetting]);
 
-  const handleShowAdd = () => {
-    setShowAdd(true);
-  };
-
-  const handleCloseAdd = () => {
-    setShowAdd(false);
-  };
-
-  const handleShowSetting = () => {
-    setShowSetting(true);
-  };
-
-  const handleCloseSetting = () => {
-    setShowSetting(false);
-  };
-
   const CustomEmpty = () => {
     return (
       <Empty
@@ -69,7 +54,7 @@ const Home = () => {
         title="目前空空如也"
       >
         <Button
-          onClick={handleShowAdd}
+          onClick={() => setShowAdd(true)}
           style={{ padding: "6px 24px" }}
           icon={<IconPlus />}
           theme="solid"
@@ -78,6 +63,7 @@ const Home = () => {
           创建片段
         </Button>
         <Button
+          onClick={() => setShowHelp(true)}
           style={{ marginLeft: "8px", padding: "6px 24px", marginRight: 12 }}
           type="primary"
         >
@@ -95,7 +81,7 @@ const Home = () => {
           <Button
             theme="borderless"
             style={{ marginRight: "8px" }}
-            onClick={handleShowAdd}
+            onClick={() => setShowAdd(true)}
             icon={<IconPlus />}
           ></Button>
           <IconServer style={{ marginRight: "8px" }} />
@@ -106,7 +92,7 @@ const Home = () => {
           <Button
             theme="borderless"
             style={{ marginLeft: "8px" }}
-            onClick={handleShowSetting}
+            onClick={() => setShowSetting(true)}
             icon={<IconSetting />}
           ></Button>
         </span>
@@ -120,8 +106,9 @@ const Home = () => {
         />
       </Content>
       <Footer className="cc-footer"></Footer>
-      <CodeEdit visible={showAdd} close={handleCloseAdd} />
-      <CodeSettings visible={showSetting} close={handleCloseSetting} />
+      <CodeEdit visible={showAdd} close={() => setShowAdd(false)} />
+      <CodeSettings visible={showSetting} close={() => setShowSetting(false)} />
+      <CodeHelp visible={showHelp} close={() => setShowHelp(false)} />
     </Layout>
   );
 };
