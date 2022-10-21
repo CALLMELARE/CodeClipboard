@@ -1,0 +1,52 @@
+html {
+  width: 100vw;
+  height: 100vh;
+}
+
+#root {
+  height: 100vh;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.cc-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+  line-height: 24px;
+  border-bottom: 1px solid #d8d8d8;
+}
+
+.cc-header .logo {
+  font-size: 16px;
+  background: linear-gradient(to right, #00a0e9, #0066ff);
+  color: transparent;
+  background-clip: text;
+  font-weight: bold;
+  line-height: 24px;
+}
+
+.cc-header .func {
+  display: flex;
+  align-items: center;
+  line-height: 24px;
+}
+
+.cc-header .func .progress {
+  width: 140px;
+}
+
+.cc-header .func .info {
+  margin-left: 8px;
+  font-size: 12px;
+  color: #a9a9a9;
+  line-height: 24px;
+}
+
+.cc-footer {
+  text-align: center;
+  color: #e0e0e0;
+}
