@@ -42,7 +42,7 @@ const CodeCard = ({
         <div className="header">
           <span className="title">
             {title}
-            <Tag
+            {/* <Tag
               style={{
                 backgroundColor: lang.bgColor,
                 color: lang.color,
@@ -51,7 +51,7 @@ const CodeCard = ({
               size="small"
             >
               {language}
-            </Tag>
+            </Tag> */}
           </span>
           <span className="func">
             <Button

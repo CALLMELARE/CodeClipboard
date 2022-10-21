@@ -55,6 +55,8 @@ const CodeEdit = (props) => {
     >
       <Form onValueChange={handleChange} initValues={props}>
         <Form.Input field="title" showClear label="标题" />
+        <Form.TextArea field="content" label="内容" />
+        <Form.Switch field="locked" label="锁定" />
       </Form>
     </Modal>
   );
