@@ -39,9 +39,11 @@ const CodeEdit = (props) => {
     if (!props.id) {
       // 新增
       create(data);
+      setData({});
     } else {
       // 修改
       modify(data);
+      setData({});
     }
   };
 
