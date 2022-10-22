@@ -54,6 +54,7 @@ body {
 }
 
 .cc-card {
+  position: relative;
   border: 1px solid rgba(28, 31, 35, 0.08);
   border-radius: 6px;
   margin: 8px;
@@ -71,6 +72,16 @@ body {
   font-weight: bold;
   cursor: pointer;
   line-height: 32px;
+}
+
+.cc-card .footer {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 8px 16px;
+  font-size: 10px;
+  color: #cfcfcf;
+  user-select: none;
 }
 
 .cc-card .header .title:hover {

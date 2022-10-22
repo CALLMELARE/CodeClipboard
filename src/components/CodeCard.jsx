@@ -108,6 +108,7 @@ const CodeCard = ({
             </pre>
           )}
         </div>
+        <div className="footer">{language ? language : "文本"}</div>
       </div>
 
       <CodeEdit

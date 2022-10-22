@@ -16,7 +16,7 @@ import {
   IconText,
   IconCode,
 } from "@douyinfe/semi-icons";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { create, modify, remove } from "../utils/code";
 import dayjs from "dayjs";
 import { getLocalStorage } from "../utils/storage";
@@ -29,10 +29,12 @@ const CodeEdit = (props) => {
   const [full, setFull] = useState(false);
   const inputRef = useRef();
 
-  useEffect(() => {
-    const t = getLocalStorage("config").defaultType;
-    setData((p) => ({ ...p, type: t }));
-  }, [props.visible]);
+  useCallback(() => {
+    if (!props.type) {
+      const t = getLocalStorage("config").defaultType;
+      setData((p) => ({ ...p, type: t }));
+    }
+  }, [props.type]);
 
   const genTitle = () => {
     const cfg = getLocalStorage("config");
@@ -169,6 +171,7 @@ const CodeEdit = (props) => {
   };
 
   const onClose = () => {
+    setData({});
     props.close();
   };
 
@@ -213,6 +216,7 @@ const CodeEdit = (props) => {
       fullScreen={full}
       header={customHeader()}
       footer={customFooter()}
+      size="large"
     >
       <KeyboardEventHandler
         handleKeys={["ctrl+s", "enter"]}
@@ -238,7 +242,7 @@ const CodeEdit = (props) => {
             maxLength={30}
             autofocus
           />
-          {props.visible && data.type === "code" && (
+          {data.type === "code" && (
             <Form.Select
               field="language"
               label="语言"
@@ -268,6 +272,7 @@ const CodeEdit = (props) => {
             autosize
             maxCount={99999}
             ref={inputRef}
+            style={{ ovserflowY: "auto" }}
           ></Form.TextArea>
           <Form.Switch field="locked" label="锁定" />
         </Form>

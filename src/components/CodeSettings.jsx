@@ -66,7 +66,9 @@ const CodeSettings = (props) => {
         props.close();
       }}
     >
-      <div style={{ position: "relative", height: "100%" }}>
+      <div
+        style={{ position: "relative", height: "100%", paddingBottom: "30px" }}
+      >
         <Form onValueChange={handleChange} initValues={config}>
           {/* <Form.RadioGroup field="mode" type="button" label="主题">
             <Form.Radio value="light">亮色</Form.Radio>
@@ -149,15 +151,13 @@ const CodeSettings = (props) => {
             </Collapsible>
           </Form.Slot>
         </Form>
-
         <div
           style={{
-            position: "absolute",
-            bottom: "16px",
             textAlign: "center",
             width: "100%",
             color: "#d9d9d9",
             fontSize: "10px",
+            padding: "16px 0",
           }}
         >
           Code Clipboard by LARE
