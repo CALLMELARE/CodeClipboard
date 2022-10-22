@@ -14,22 +14,19 @@ const create = (v) => {
     console.log("create:", obj);
     const result = raw.concat(compile(obj));
     setLocalStorage("data", result);
-    resolve({ msg: "创建成功" });
+    resolve("创建成功");
   });
 };
 
 // 修改
 const modify = (v) => {
   return new Promise((resolve, reject) => {
-    const raw = getLocalStorage("data");
-    let data = raw.map((item, index) => {
-      return item
-    });
+    const data = getLocalStorage("data");
     let index = null;
     for (let item in data) {
       if (data[item].i === v.id) {
         index = item;
-        console.log(index)
+        console.log(index);
         break;
       }
     }
@@ -64,24 +61,24 @@ const check = (id) => {
 };
 
 // 删除
-const remove = ({ id }) => {
+const remove = (v) => {
   return new Promise((resolve, reject) => {
-    const raw = getLocalStorage("data");
-    let data = parse(raw);
+    let data = getLocalStorage("data");
     let index = null;
     for (let item in data) {
-      if (data[item].id === id) {
+      if (data[item].i === v.id) {
         index = item;
         break;
       }
     }
-    if (index) {
-      data = [...data.slice(0, index - 1), ...data.slice(index)];
-      const result = [compile(data)];
+    if (index >= 0) {
+      data[index] = null;
+      data.splice(index, 1);
+      const result = data;
       setLocalStorage("data", result);
       resolve("删除成功");
     } else {
-      resolve("该条信息不存在");
+      reject("该条信息不存在");
     }
   });
 };
