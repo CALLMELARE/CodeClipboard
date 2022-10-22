@@ -44,6 +44,12 @@ const CodeHelp = (props) => {
         试着按下【F12】，切换到【应用程序】->【本地存储】，它们就在那里，一个也不少。
       </Paragraph>
       <Title heading={5} style={{ margin: "8px 0" }}>
+        为什么存储上限是5MB？
+      </Title>
+      <Paragraph>
+        这是浏览器对于本地存储的限制，未来可能会引入indexedDB以打破这一限制。
+      </Paragraph>
+      <Title heading={5} style={{ margin: "8px 0" }}>
         数据如何迁移？
       </Title>
       <Paragraph>导出和导入是计划中支持的功能。</Paragraph>

@@ -34,8 +34,6 @@ const CodeEdit = (props) => {
     setData((p) => ({ ...p, type: t }));
   }, [props.visible]);
 
-  useEffect(() => {}, [data.content]);
-
   const genTitle = () => {
     const cfg = getLocalStorage("config");
     const enable = cfg && cfg.enableTitle;
@@ -48,12 +46,12 @@ const CodeEdit = (props) => {
   };
 
   const handleTypeChange = (value) => {
-    console.log(value);
+    // console.log(value);
     setData((p) => ({ ...p, type: value }));
   };
 
   const handleChange = (value) => {
-    console.log(data);
+    // console.log(data);
     setData((prev) => ({ ...prev, ...value }));
   };
 
@@ -240,7 +238,7 @@ const CodeEdit = (props) => {
             maxLength={30}
             autofocus
           />
-          {data.type === "code" && (
+          {props.visible && data.type === "code" && (
             <Form.Select
               field="language"
               label="语言"

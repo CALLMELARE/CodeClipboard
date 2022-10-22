@@ -5,6 +5,7 @@ import IconCpp from "./Cpp.png";
 import IconHTML from "./HTML.png";
 import IconJava from "./Java.png";
 import IconJavaScript from "./JavaScript.png";
+import IconMarkdown from "./Markdown.png";
 import IconPython from "./Python.png";
 import IconSwift from "./Swift.png";
 import IconTypeScript from "./TypeScript.png";
@@ -29,6 +30,7 @@ export {
   IconHTML,
   IconJava,
   IconJavaScript,
+  IconMarkdown,
   IconPython,
   IconSwift,
   IconTypeScript,

@@ -4,6 +4,7 @@ import {
   IconCpp,
   IconCSharp,
   IconJava,
+  IconMarkdown,
   IconPython,
   IconSwift,
   IconTypeScript,
@@ -30,6 +31,10 @@ const languages = [
   {
     label: "JavaScript",
     icon: IconJavaScript,
+  },
+  {
+    label: "Markdown",
+    icon: IconMarkdown,
   },
   {
     label: "Python",
