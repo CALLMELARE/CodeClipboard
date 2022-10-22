@@ -18,7 +18,6 @@ const CodeMatrix = ({ dataSource, listType, Empty }) => {
   };
 
   const renderCards = (data) => {
-    console.log(data);
     return (
       data &&
       data.map((item, index) => {

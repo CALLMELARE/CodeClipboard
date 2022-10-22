@@ -11,6 +11,7 @@ const init = () => {
     const cfg = {
       listType: "triple",
       mode: "light",
+      defaultType: "text",
       enableTitle: true,
       titleFormat: "[CodeSnippet]YYYYMMDD_HH:mm:ss",
     };

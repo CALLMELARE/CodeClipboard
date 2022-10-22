@@ -10,6 +10,8 @@ import {
   IconDelete,
   IconGithubLogo,
   IconInfoCircle,
+  IconText,
+  IconCode,
 } from "@douyinfe/semi-icons";
 import { useEffect, useState } from "react";
 import { getAllCfg, setCfg } from "../utils/setting";
@@ -31,12 +33,13 @@ const CodeSettings = (props) => {
   };
 
   const handleChange = (value) => {
-    const { listType, mode, titleFormat, enableTitle } = value;
+    const { listType, mode, titleFormat, enableTitle, defaultType } = value;
     setConfig({ listType, mode, titleFormat, enableTitle });
     listType && setCfg("listType", listType);
     mode && switchMode(mode);
     titleFormat && setCfg("titleFormat", titleFormat);
     setCfg("enableTitle", enableTitle);
+    defaultType && setCfg("defaultType", defaultType);
   };
 
   const switchMode = (mode) => {
@@ -74,6 +77,25 @@ const CodeSettings = (props) => {
             <Form.Radio value="single">单列</Form.Radio>
             <Form.Radio value="double">双列</Form.Radio>
             <Form.Radio value="triple">三列</Form.Radio>
+          </Form.RadioGroup>
+
+          <Form.RadioGroup
+            field="defaultType"
+            type="button"
+            label="默认片段类型"
+          >
+            <Form.Radio value="text">
+              <span style={{ display: "flex", alignItems: "center" }}>
+                <IconText style={{ marginRight: "8px" }} />
+                文本
+              </span>
+            </Form.Radio>
+            <Form.Radio value="code">
+              <span style={{ display: "flex", alignItems: "center" }}>
+                <IconCode style={{ marginRight: "8px" }} />
+                代码
+              </span>
+            </Form.Radio>
           </Form.RadioGroup>
 
           <Form.Switch field="enableTitle" label="自动生成标题"></Form.Switch>

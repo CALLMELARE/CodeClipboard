@@ -71,7 +71,11 @@ const CodeEdit = (props) => {
           {props.id ? `正在编辑：${props.title}` : "创建"}
         </Title>
         <span style={{ display: "flex", marginLeft: "16px" }}>
-          <Select defaultValue={props.type} onChange={handleTypeChange}>
+          <Select
+            disabled={props.id}
+            defaultValue={props.type}
+            onChange={handleTypeChange}
+          >
             <Select.Option
               value="text"
               showTick={false}
