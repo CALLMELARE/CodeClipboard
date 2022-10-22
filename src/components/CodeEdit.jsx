@@ -6,6 +6,9 @@ import {
   Toast,
   Typography,
   useFieldApi,
+  RadioGroup,
+  Radio,
+  Select,
 } from "@douyinfe/semi-ui";
 import {
   IconDelete,
@@ -14,6 +17,8 @@ import {
   IconMinimize,
   IconMaximize,
   IconClock,
+  IconText,
+  IconCode,
 } from "@douyinfe/semi-icons";
 import { useEffect, useState } from "react";
 import { create, modify, remove } from "../utils/code";
@@ -34,6 +39,13 @@ const CodeEdit = (props) => {
       : "";
     setData((p) => ({ ...p, title: t }));
     return t;
+  };
+
+  const defaultType = () => {};
+
+  const handleTypeChange = (value) => {
+    console.log(value);
+    setData((p) => ({ ...p, type: value }));
   };
 
   const handleChange = (value) => {
@@ -59,8 +71,32 @@ const CodeEdit = (props) => {
           {props.id ? `正在编辑：${props.title}` : "创建"}
         </Title>
         <span style={{ display: "flex", marginLeft: "16px" }}>
+          <Select defaultValue={props.type} onChange={handleTypeChange}>
+            <Select.Option
+              value="text"
+              showTick={false}
+              label={
+                <span style={{ display: "flex", alignItems: "center" }}>
+                  <IconText style={{ marginRight: "8px" }} />
+                  文本
+                </span>
+              }
+            ></Select.Option>{" "}
+            <Select.Option
+              value="code"
+              showTick={false}
+              label={
+                <span style={{ display: "flex", alignItems: "center" }}>
+                  <IconCode style={{ marginRight: "8px" }} />
+                  代码
+                </span>
+              }
+            ></Select.Option>
+          </Select>
+
           <Button
             key="fullscreen"
+            style={{ marginLeft: "8px" }}
             type="tertiary"
             theme="borderless"
             icon={full ? <IconMinimize /> : <IconMaximize />}
@@ -183,7 +219,7 @@ const CodeEdit = (props) => {
           autosize
           maxCount={99999}
         />
-        <Form.Switch field="locked" label="锁定" />
+        {/* <Form.Switch field="locked" label="锁定" /> */}
       </Form>
     </Modal>
   );

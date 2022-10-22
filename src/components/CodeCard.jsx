@@ -5,7 +5,7 @@ import {
   Modal,
   Typography,
 } from "@douyinfe/semi-ui";
-import { IconCopy } from "@douyinfe/semi-icons";
+import { IconCopy, IconText, IconCode } from "@douyinfe/semi-icons";
 import copy from "copy-to-clipboard";
 import { languages } from "../utils/constant";
 import { useState } from "react";
@@ -19,6 +19,7 @@ const CodeCard = ({
   created,
   locked,
   language,
+  type,
 }) => {
   const { Title, Text } = Typography;
   const [showEdit, setShowEdit] = useState(false);
@@ -58,8 +59,18 @@ const CodeCard = ({
             <Title
               heading={5}
               ellipsis={{ showTooltip: true }}
-              style={{ lineHeight: "32px" }}
+              style={{
+                lineHeight: "32px",
+                display: "flex",
+                alignItems: "center",
+              }}
             >
+              {type === "text" ? (
+                <IconText style={{ marginRight: "8px" }} />
+              ) : null}
+              {type === "code" ? (
+                <IconCode style={{ marginRight: "8px" }} />
+              ) : null}
               {title}
             </Title>
             {/* <Tag
@@ -96,6 +107,7 @@ const CodeCard = ({
         created={created}
         locked={locked}
         language={language}
+        type={type}
       />
     </>
   );

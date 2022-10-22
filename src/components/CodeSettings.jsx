@@ -17,7 +17,7 @@ import { getLocalStorage, setLocalStorage } from "../utils/storage";
 import CodeOS from "../info/CodeOS";
 
 const CodeSettings = (props) => {
-  const [config, setConfig] = useState();
+  const [config, setConfig] = useState(props);
   const [isOpen, setOpen] = useState(false);
 
   useEffect(() => {
