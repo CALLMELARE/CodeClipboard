@@ -5,9 +5,6 @@ import {
   Button,
   Toast,
   Typography,
-  useFieldApi,
-  RadioGroup,
-  Radio,
   Select,
 } from "@douyinfe/semi-ui";
 import {
@@ -16,16 +13,16 @@ import {
   IconClose,
   IconMinimize,
   IconMaximize,
-  IconClock,
   IconText,
   IconCode,
 } from "@douyinfe/semi-icons";
 import { useEffect, useRef, useState } from "react";
 import { create, modify, remove } from "../utils/code";
 import dayjs from "dayjs";
-import { getCfg } from "../utils/setting";
-import { getLocalStorage, getLocalStorageVolume } from "../utils/storage";
+import { getLocalStorage } from "../utils/storage";
 import KeyboardEventHandler from "react-keyboard-event-handler";
+import Icon from "../icons";
+import { languages } from "../utils/constant";
 
 const CodeEdit = (props) => {
   const [data, setData] = useState({ ...props });
@@ -220,10 +217,10 @@ const CodeEdit = (props) => {
       footer={customFooter()}
     >
       <KeyboardEventHandler
-        handleKeys={["ctrl+s"]}
+        handleKeys={["ctrl+s", "enter"]}
         onKeyEvent={(key, e) => {
           e.preventDefault();
-          if (key === "ctrl+s") {
+          if (key === "ctrl+s" || key === "enter") {
             onSave();
           }
         }}
@@ -243,6 +240,28 @@ const CodeEdit = (props) => {
             maxLength={30}
             autofocus
           />
+          {data.type === "code" && (
+            <Form.Select
+              field="language"
+              label="语言"
+              filter
+              placeholder="支持10种语言"
+              style={{ width: "100%" }}
+            >
+              {languages.map((value, index) => {
+                return (
+                  <Form.Select.Option
+                    showTick={false}
+                    value={value.label}
+                    key={value.label}
+                  >
+                    <Icon src={value.icon} style={{ marginRight: "8px" }} />
+                    {value.label}
+                  </Form.Select.Option>
+                );
+              })}
+            </Form.Select>
+          )}
           <Form.TextArea
             field="content"
             label="内容"

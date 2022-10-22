@@ -38,7 +38,7 @@ const CodeCard = ({
   const copyToClipboard = (data) => {
     if (data) {
       copy(data);
-      const thumbnail = data.length > 20 ? data.substring(0, 17) + "..." : data;
+      const thumbnail = data.length > 30 ? data.substring(0, 27) + "..." : data;
       Notification.success({
         title: "复制成功",
         content: thumbnail,
@@ -98,7 +98,12 @@ const CodeCard = ({
             <CodeHighlight language={language} content={content} />
           )}
           {type === "text" && (
-            <pre style={{ fontFamily: "JetBrainsMono", fontSize: "14px" }}>
+            <pre
+              style={{
+                fontFamily: "JetBrainsMono",
+                fontSize: "14px",
+              }}
+            >
               {content}
             </pre>
           )}

@@ -25,7 +25,7 @@ const CodeHelp = (props) => {
         点<IconPlus />
         创建代码片段，之后它便会出现在列表中。
       </Paragraph>
-      <Paragraph>按下【Ctrl+S】即可保存</Paragraph>
+      <Paragraph>按下【Ctrl+S】或【Enter】即可保存</Paragraph>
       <Paragraph>
         点<IconCopy />
         复制代码片段，代码内容会复制至你的粘贴板供你使用。
