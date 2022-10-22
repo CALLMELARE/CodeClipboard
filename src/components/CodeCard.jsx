@@ -20,7 +20,7 @@ const CodeCard = ({
   locked,
   language,
 }) => {
-  const { Title } = Typography;
+  const { Title, Text } = Typography;
   const [showEdit, setShowEdit] = useState(false);
 
   const lang = languages[language];
@@ -81,7 +81,9 @@ const CodeCard = ({
             ></Button>
           </span>
         </div>
-        <div className="content">{content}</div>
+        <div className="content">
+          <Text>{content}</Text>
+        </div>
       </div>
 
       <CodeEdit

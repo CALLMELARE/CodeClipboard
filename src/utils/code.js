@@ -11,6 +11,7 @@ const create = (v) => {
       ...v,
     };
     obj.id = uuid;
+    obj.title = v.title ? v.title : "未命名";
     console.log("create:", obj);
     const result = raw.concat(compile(obj));
     setLocalStorage("data", result);
