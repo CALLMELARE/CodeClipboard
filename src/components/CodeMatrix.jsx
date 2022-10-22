@@ -21,6 +21,7 @@ const CodeMatrix = ({ dataSource, listType, Empty }) => {
     return (
       data &&
       data.map((item, index) => {
+        console.log(item);
         return <CodeCard key={index} {...parse(item)} />;
       })
     );

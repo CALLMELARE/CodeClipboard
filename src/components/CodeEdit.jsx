@@ -20,14 +20,20 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { create, modify, remove } from "../utils/code";
 import dayjs from "dayjs";
 import { getLocalStorage } from "../utils/storage";
+import { useSelector, useDispatch } from "react-redux";
+import { saveItemData, toggleFullScreen } from "../store/codeEdit.store";
 import KeyboardEventHandler from "react-keyboard-event-handler";
 import Icon from "../icons";
 import { languages } from "../utils/constant";
 
 const CodeEdit = (props) => {
+  // state
   const [data, setData] = useState({ ...props });
-  const [full, setFull] = useState(false);
-  const inputRef = useRef();
+
+  // store
+  const title = useSelector((s) => s.edit.title);
+  const fullStatus = useSelector((s) => s.edit.behavior.fullScreen);
+  const dispatch = useDispatch();
 
   useCallback(() => {
     if (!props.type) {
@@ -111,9 +117,9 @@ const CodeEdit = (props) => {
             style={{ marginLeft: "8px" }}
             type="tertiary"
             theme="borderless"
-            icon={full ? <IconMinimize /> : <IconMaximize />}
+            icon={fullStatus ? <IconMinimize /> : <IconMaximize />}
             onClick={() => {
-              setFull(!full);
+              dispatch(toggleFullScreen());
             }}
           ></Button>
           <Button
@@ -176,24 +182,12 @@ const CodeEdit = (props) => {
   };
 
   const onSave = () => {
-    save();
+    handleSave();
     onClose();
   };
 
-  const save = () => {
-    if (!props.id) {
-      // 新增
-      create(data).then((res) => {
-        Toast.success(res);
-      });
-      setData({});
-    } else {
-      // 修改
-      modify(data).then((res) => {
-        Toast.success(res);
-      });
-      setData({});
-    }
+  const handleSave = () => {
+    dispatch(saveItemData());
   };
 
   const onDel = () => {
@@ -206,14 +200,12 @@ const CodeEdit = (props) => {
       });
   };
 
-  const typeSwitch = () => {};
-
   return (
     <Modal
       visible={props.visible}
       onCancel={onClose}
       closeOnEsc={true}
-      fullScreen={full}
+      fullScreen={fullStatus}
       header={customHeader()}
       footer={customFooter()}
       size="large"
@@ -240,7 +232,6 @@ const CodeEdit = (props) => {
             showClear
             label="标题"
             maxLength={30}
-            autofocus
           />
           {data.type === "code" && (
             <Form.Select
@@ -271,7 +262,6 @@ const CodeEdit = (props) => {
             showClear
             autosize
             maxCount={99999}
-            ref={inputRef}
             style={{ ovserflowY: "auto" }}
           ></Form.TextArea>
           <Form.Switch field="locked" label="锁定" />
