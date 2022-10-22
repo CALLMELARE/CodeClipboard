@@ -10,6 +10,7 @@ import copy from "copy-to-clipboard";
 import { languages } from "../utils/constant";
 import { useState } from "react";
 import CodeEdit from "./CodeEdit";
+import CodeHighlight from "./CodeHighlight";
 
 const CodeCard = ({
   id,
@@ -93,7 +94,14 @@ const CodeCard = ({
           </span>
         </div>
         <div className="content">
-          <Text>{content}</Text>
+          {type === "code" && (
+            <CodeHighlight language={language} content={content} />
+          )}
+          {type === "text" && (
+            <pre style={{ fontFamily: "JetBrainsMono", fontSize: "14px" }}>
+              {content}
+            </pre>
+          )}
         </div>
       </div>
 

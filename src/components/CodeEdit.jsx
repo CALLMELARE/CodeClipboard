@@ -20,7 +20,7 @@ import {
   IconText,
   IconCode,
 } from "@douyinfe/semi-icons";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { create, modify, remove } from "../utils/code";
 import dayjs from "dayjs";
 import { getCfg } from "../utils/setting";
@@ -29,11 +29,14 @@ import { getLocalStorage, getLocalStorageVolume } from "../utils/storage";
 const CodeEdit = (props) => {
   const [data, setData] = useState({ ...props });
   const [full, setFull] = useState(false);
+  const inputRef = useRef();
 
   useEffect(() => {
     const t = getLocalStorage("config").defaultType;
     setData((p) => ({ ...p, type: t }));
   }, [props.visible]);
+
+  useEffect(() => {}, [data.content]);
 
   const genTitle = () => {
     const cfg = getLocalStorage("config");
@@ -236,7 +239,9 @@ const CodeEdit = (props) => {
           showClear
           autosize
           maxCount={99999}
-        />
+          ref={inputRef}
+        >
+        </Form.TextArea>
         <Form.Switch field="locked" label="锁定" />
       </Form>
     </Modal>
