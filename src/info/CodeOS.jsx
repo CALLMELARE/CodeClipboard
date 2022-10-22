@@ -13,6 +13,10 @@ const CodeOS = () => {
       </Text>
       <Text link={{ href: "https://day.js.org/" }}>Day.js</Text>
       <Text link={{ href: "https://highlightjs.org/" }}>highlight.js</Text>
+      <Paragraph>使用开源字体：</Paragraph>
+      <Text link={{ href: "https://github.com/JetBrains/JetBrainsMono" }}>
+        JetBrainsMono
+      </Text>
     </div>
   );
 };
