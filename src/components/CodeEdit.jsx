@@ -103,6 +103,7 @@ const CodeEdit = () => {
             type="tertiary"
             icon={<IconClose />}
             onClick={() => {
+              dispatch(resetItemData());
               dispatch(toggleEditModalVisible());
             }}
           ></Button>

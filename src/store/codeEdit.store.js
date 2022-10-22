@@ -52,37 +52,18 @@ export const CodeEditSlice = createSlice({
       }
     },
     saveItemData: (s) => {
-      const { id, title, content, updated, created, locked, language, type } =
-        s;
-      if (!id) {
-        create({
-          title,
-          content,
-          updated,
-          created,
-          locked,
-          language,
-          type,
-        }).then((res) => {
+      if (!s.data.id) {
+        create(s.data).then((res) => {
           Toast.success(res);
         });
       } else {
-        modify({
-          id,
-          title,
-          content,
-          updated,
-          created,
-          locked,
-          language,
-          type,
-        }).then((res) => {
+        modify(s.data).then((res) => {
           Toast.success(res);
         });
       }
     },
     deleteItemData: (s) => {
-      const id = s.data.id
+      const id = s.data.id;
       remove(id)
         .then((res) => {
           Toast.success(res);
@@ -120,10 +101,14 @@ export const CodeEditSlice = createSlice({
       s.data.locked = locked;
     },
     resetItemData: (s) => {
+      s.data.id = "";
       s.data.title = "";
-      s.data.language = "";
       s.data.content = "";
-      s.data.locked = "";
+      s.data.updated = "";
+      s.data.created = "";
+      s.data.locked = false;
+      s.data.language = "";
+      s.data.type = "";
     },
   },
 });

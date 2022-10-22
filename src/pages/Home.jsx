@@ -16,7 +16,6 @@ import CodeHelp from "../info/CodeHelp";
 import CodeMatrix from "../components/CodeMatrix";
 import CodeEdit from "../components/CodeEdit";
 import CodeSettings from "../components/CodeSettings";
-import CodeEmpty from "../components/CodeEmpty";
 import {
   getAllConfig,
   toggleSettingDrawerVisible,
@@ -100,11 +99,7 @@ const Home = () => {
         </span>
       </Header>
       <Content style={{ padding: "16px" }}>
-        <CodeMatrix
-          key="matrix"
-          dataSource={data}
-          Empty={() => <CodeEmpty />}
-        />
+        <CodeMatrix key="matrix" dataSource={data} />
       </Content>
       <Footer className="cc-footer"></Footer>
       <CodeEdit />

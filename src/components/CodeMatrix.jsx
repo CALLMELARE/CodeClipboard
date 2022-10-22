@@ -1,9 +1,12 @@
 import {} from "@douyinfe/semi-ui";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { parse } from "../utils/compiler";
+import CodeEmpty from "./CodeEmpty";
 import CodeCard from "./CodeCard";
 
-const CodeMatrix = ({ dataSource, listType, Empty }) => {
+const CodeMatrix = ({ dataSource }) => {
+  const { listType } = useSelector((s) => s.setting.config);
   const Cols = (listType) => {
     switch (listType) {
       case "single":
@@ -21,7 +24,6 @@ const CodeMatrix = ({ dataSource, listType, Empty }) => {
     return (
       data &&
       data.map((item, index) => {
-        console.log(item);
         return <CodeCard key={index} {...parse(item)} />;
       })
     );
@@ -34,7 +36,7 @@ const CodeMatrix = ({ dataSource, listType, Empty }) => {
           {renderCards(dataSource)}
         </div>
       ) : (
-        <Empty />
+        <CodeEmpty />
       )}
     </>
   );
