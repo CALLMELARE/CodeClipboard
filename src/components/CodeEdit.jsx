@@ -222,15 +222,22 @@ const CodeEdit = (props) => {
           title: props.title ? props.title : genTitle.bind(null),
         }}
       >
-        <Form.Input field="title" showClear label="标题" maxLength={30} />
+        <Form.Input
+          field="title"
+          disabled={data.locked}
+          showClear
+          label="标题"
+          maxLength={30}
+        />
         <Form.TextArea
           field="content"
           label="内容"
+          disabled={data.locked}
           showClear
           autosize
           maxCount={99999}
         />
-        {/* <Form.Switch field="locked" label="锁定" /> */}
+        <Form.Switch field="locked" label="锁定" />
       </Form>
     </Modal>
   );
