@@ -24,11 +24,16 @@ import { useEffect, useState } from "react";
 import { create, modify, remove } from "../utils/code";
 import dayjs from "dayjs";
 import { getCfg } from "../utils/setting";
-import { getLocalStorage } from "../utils/storage";
+import { getLocalStorage, getLocalStorageVolume } from "../utils/storage";
 
 const CodeEdit = (props) => {
   const [data, setData] = useState({ ...props });
   const [full, setFull] = useState(false);
+
+  useEffect(() => {
+    const t = getLocalStorage("config").defaultType;
+    setData((p) => ({ ...p, type: t }));
+  }, [props.visible]);
 
   const genTitle = () => {
     const cfg = getLocalStorage("config");
@@ -40,8 +45,6 @@ const CodeEdit = (props) => {
     setData((p) => ({ ...p, title: t }));
     return t;
   };
-
-  const defaultType = () => {};
 
   const handleTypeChange = (value) => {
     console.log(value);
@@ -72,12 +75,15 @@ const CodeEdit = (props) => {
         </Title>
         <span style={{ display: "flex", marginLeft: "16px" }}>
           <Select
-            disabled={props.id}
-            defaultValue={props.type}
+            disabled={props.id ? true : false}
+            defaultValue={
+              props.type ? props.type : getLocalStorage("config").defaultType
+            }
             onChange={handleTypeChange}
           >
             <Select.Option
               value="text"
+              key="text"
               showTick={false}
               label={
                 <span style={{ display: "flex", alignItems: "center" }}>
@@ -88,6 +94,7 @@ const CodeEdit = (props) => {
             ></Select.Option>{" "}
             <Select.Option
               value="code"
+              key="code"
               showTick={false}
               label={
                 <span style={{ display: "flex", alignItems: "center" }}>

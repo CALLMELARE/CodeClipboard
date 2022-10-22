@@ -27,7 +27,6 @@ const modify = (v) => {
     for (let item in data) {
       if (data[item].i === v.id) {
         index = item;
-        console.log(index);
         break;
       }
     }
