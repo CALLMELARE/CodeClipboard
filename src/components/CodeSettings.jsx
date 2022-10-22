@@ -66,9 +66,7 @@ const CodeSettings = (props) => {
         props.close();
       }}
     >
-      <div
-        style={{ position: "relative", height: "100%", paddingBottom: "30px" }}
-      >
+      <div style={{ position: "relative", paddingBottom: "30px" }}>
         <Form onValueChange={handleChange} initValues={config}>
           {/* <Form.RadioGroup field="mode" type="button" label="主题">
             <Form.Radio value="light">亮色</Form.Radio>

@@ -247,7 +247,7 @@ const CodeEdit = (props) => {
               field="language"
               label="语言"
               filter
-              placeholder="支持10种语言"
+              placeholder={`支持${languages.length}种编程语言`}
               style={{ width: "100%" }}
             >
               {languages.map((value, index) => {
