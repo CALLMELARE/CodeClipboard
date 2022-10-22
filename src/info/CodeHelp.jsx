@@ -55,6 +55,9 @@ const CodeHelp = () => {
       <Paragraph>
         这是浏览器对于本地存储的限制，未来可能会引入indexedDB以打破这一限制。
       </Paragraph>
+      <Paragraph>
+        在设置菜单里你可以找到测试最大存储容量的选项，其原理是不断尝试存储字符串直至报错。
+      </Paragraph>
       <Title heading={5} style={{ margin: "8px 0" }}>
         数据如何迁移？
       </Title>

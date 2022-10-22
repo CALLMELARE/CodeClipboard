@@ -29,6 +29,7 @@ import {
   updateMaxVolumn,
   updateUsedVolumn,
 } from "../store/storage.store";
+import { removeLocalStorage } from "../utils/storage";
 
 const CodeSettings = () => {
   // store
@@ -49,7 +50,12 @@ const CodeSettings = () => {
     >
       <div style={{ position: "relative", paddingBottom: "30px" }}>
         {isTesting ? (
-          <Banner type="info" icon={<Spin />} title="正在测试中..." />
+          <Banner
+            type="info"
+            closeIcon={null}
+            icon={<Spin />}
+            title="正在测试中..."
+          />
         ) : null}
         <Form
           onValueChange={(v) => {
@@ -106,7 +112,7 @@ const CodeSettings = () => {
           <Form.Slot label="数据管理">
             <Popconfirm
               title="是否开始测试"
-              content="此过程会持续数十秒"
+              content="此过程会持续数十秒至数分钟，并可能导致严重的电脑卡顿"
               onConfirm={() => {
                 dispatch(updateMaxVolumn());
               }}
@@ -120,6 +126,7 @@ const CodeSettings = () => {
               content="此操作不可逆"
               onConfirm={() => {
                 dispatch(deleteAllData());
+                removeLocalStorage("test");
                 dispatch(updateDataSource());
                 dispatch(updateUsedVolumn());
               }}
