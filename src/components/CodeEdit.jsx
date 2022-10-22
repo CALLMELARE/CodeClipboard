@@ -1,12 +1,75 @@
-import { Form, Modal, Button, Toast } from "@douyinfe/semi-ui";
-import { IconDelete, IconSave, IconClose } from "@douyinfe/semi-icons";
+import {
+  useFormApi,
+  Form,
+  Modal,
+  Button,
+  Toast,
+  Typography,
+} from "@douyinfe/semi-ui";
+import {
+  IconDelete,
+  IconSave,
+  IconClose,
+  IconMinimize,
+  IconMaximize,
+  IconClock,
+} from "@douyinfe/semi-icons";
 import { useState } from "react";
 import { create, modify, remove } from "../utils/code";
+import dayjs from "dayjs";
 
 const CodeEdit = (props) => {
-  const [data, setData] = useState(props);
+  const [data, setData] = useState({ ...props });
+  const [full, setFull] = useState(false);
+
+  const genTitle = () => {
+    const t = dayjs(Date.now()).format("[CodeSnippet]_YYYYMMDD_HH:mm:ss");
+    setData((p) => ({ ...p, title: t }));
+    return t;
+  };
+
   const handleChange = (value) => {
+    console.log(data);
     setData((prev) => ({ ...prev, ...value }));
+  };
+
+  const customHeader = () => {
+    const { Title } = Typography;
+    return (
+      <div
+        style={{
+          margin: "24px 0",
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <Title
+          heading={5}
+          ellipsis={{ showTooltip: true }}
+          style={{ lineHeight: "32px" }}
+        >
+          {props.id ? `正在编辑：${props.title}` : "创建"}
+        </Title>
+        <span style={{ display: "flex", marginLeft: "16px" }}>
+          <Button
+            key="fullscreen"
+            type="tertiary"
+            theme="borderless"
+            icon={full ? <IconMinimize /> : <IconMaximize />}
+            onClick={() => {
+              setFull(!full);
+            }}
+          ></Button>
+          <Button
+            style={{ marginLeft: "8px" }}
+            key="close"
+            type="tertiary"
+            icon={<IconClose />}
+            onClick={onClose}
+          ></Button>
+        </span>
+      </div>
+    );
   };
 
   const customFooter = () => {
@@ -77,24 +140,41 @@ const CodeEdit = (props) => {
   };
 
   const onDel = () => {
-    remove(data).then((res)=>{
-      Toast.success(res);
-    }).catch((err)=>{
-      Toast.error(err);
-    })
+    remove(data)
+      .then((res) => {
+        Toast.success(res);
+      })
+      .catch((err) => {
+        Toast.error(err);
+      });
   };
+
+  const typeSwitch = () => {};
 
   return (
     <Modal
-      title={props.id ? `正在编辑：${props.title}` : "创建"}
       visible={props.visible}
       onCancel={onClose}
       closeOnEsc={true}
+      fullScreen={full}
+      header={customHeader()}
       footer={customFooter()}
     >
-      <Form onValueChange={handleChange} initValues={props}>
-        <Form.Input field="title" showClear label="标题" />
-        <Form.TextArea field="content" label="内容" />
+      <Form
+        onValueChange={handleChange}
+        initValues={{
+          ...props,
+          title: props.title ? props.title : genTitle.bind(null),
+        }}
+      >
+        <Form.Input field="title" showClear label="标题" maxLength={30} />
+        <Form.TextArea
+          field="content"
+          label="内容"
+          showClear
+          autosize
+          maxCount={99999}
+        />
         <Form.Switch field="locked" label="锁定" />
       </Form>
     </Modal>

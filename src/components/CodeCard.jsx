@@ -1,4 +1,10 @@
-import { Button, Notification, Tag, Modal } from "@douyinfe/semi-ui";
+import {
+  Button,
+  Notification,
+  Tag,
+  Modal,
+  Typography,
+} from "@douyinfe/semi-ui";
 import { IconCopy } from "@douyinfe/semi-icons";
 import copy from "copy-to-clipboard";
 import { languages } from "../utils/constant";
@@ -14,6 +20,7 @@ const CodeCard = ({
   locked,
   language,
 }) => {
+  const { Title } = Typography;
   const [showEdit, setShowEdit] = useState(false);
 
   const lang = languages[language];
@@ -48,7 +55,13 @@ const CodeCard = ({
       <div className="cc-card">
         <div className="header">
           <span className="title" onClick={handleShowEdit}>
-            {title}
+            <Title
+              heading={5}
+              ellipsis={{ showTooltip: true }}
+              style={{ lineHeight: "32px" }}
+            >
+              {title}
+            </Title>
             {/* <Tag
               style={{
                 backgroundColor: lang.bgColor,
@@ -68,9 +81,7 @@ const CodeCard = ({
             ></Button>
           </span>
         </div>
-        <div className="content" >
-          {content}
-        </div>
+        <div className="content">{content}</div>
       </div>
 
       <CodeEdit
