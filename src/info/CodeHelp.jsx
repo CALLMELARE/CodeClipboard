@@ -1,14 +1,20 @@
 import { SideSheet, Typography } from "@douyinfe/semi-ui";
 import { IconPlus, IconSetting, IconCopy } from "@douyinfe/semi-icons";
+import { useSelector, useDispatch } from "react-redux";
+import { toggleHelpDrawerVisible } from "../store/codeHelp.store";
 
-const CodeHelp = (props) => {
-  const { Title, Text, Paragraph } = Typography;
+const CodeHelp = () => {
+  // store
+  const { helpDrawerVisible } = useSelector((s) => s.help.behavior);
+  const dispatch = useDispatch();
+
+  const { Title, Paragraph } = Typography;
   return (
     <SideSheet
       title="指南"
-      visible={props.visible}
+      visible={helpDrawerVisible}
       onCancel={() => {
-        props.close();
+        dispatch(toggleHelpDrawerVisible());
       }}
     >
       <Title heading={5} style={{ margin: "8px 0" }}>
@@ -41,7 +47,7 @@ const CodeHelp = (props) => {
         所有的代码数据都在浏览器中，没有一个字节会被上传至网络。
       </Paragraph>
       <Paragraph>
-        试着按下【F12】，切换到【应用程序】->【本地存储】，它们就在那里，一个也不少。
+        试着按下【F12】，切换到【应用程序】-&gt;【本地存储】，它们就在那里，一个也不少。
       </Paragraph>
       <Title heading={5} style={{ margin: "8px 0" }}>
         为什么存储上限是5MB？

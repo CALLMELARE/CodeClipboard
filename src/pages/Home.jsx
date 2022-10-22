@@ -11,11 +11,17 @@ import {
   getLocalStorage,
   sizeFormat,
 } from "../utils/storage";
+import { useDispatch } from "react-redux";
 import CodeHelp from "../info/CodeHelp";
 import CodeMatrix from "../components/CodeMatrix";
 import CodeEdit from "../components/CodeEdit";
 import CodeSettings from "../components/CodeSettings";
-import { IllustrationNoResult } from "@douyinfe/semi-illustrations";
+import CodeEmpty from "../components/CodeEmpty";
+import {
+  getAllConfig,
+  toggleSettingDrawerVisible,
+} from "../store/codeSetting.store";
+
 const { Header, Footer, Content } = Layout;
 
 const Home = () => {
@@ -27,6 +33,8 @@ const Home = () => {
   const [showAdd, setShowAdd] = useState(false);
   const [showSetting, setShowSetting] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
+
+  const dispatch = useDispatch();
 
   // 更新用量
   setInterval(() => {
@@ -47,32 +55,6 @@ const Home = () => {
     setPercent(p);
   }, [maxVolumn, used, showSetting]);
 
-  const CustomEmpty = () => {
-    return (
-      <Empty
-        image={<IllustrationNoResult style={{ width: 150, height: 150 }} />}
-        title="空空如也"
-      >
-        <Button
-          onClick={() => setShowAdd(true)}
-          style={{ padding: "6px 24px" }}
-          icon={<IconPlus />}
-          theme="solid"
-          type="primary"
-        >
-          创建片段
-        </Button>
-        <Button
-          onClick={() => setShowHelp(true)}
-          style={{ marginLeft: "8px", padding: "6px 24px", marginRight: 12 }}
-          type="primary"
-        >
-          阅读指南
-        </Button>
-      </Empty>
-    );
-  };
-
   return (
     <Layout>
       <Header className="cc-header">
@@ -90,13 +72,18 @@ const Home = () => {
             {sizeFormat(used)} / {sizeFormat(maxVolumn)}
           </span>
           {data && data.length ? (
-            <Button icon={<IconHelpCircle />} onClick={() => setShowHelp(true)} theme="borderless">
-              
-            </Button>
+            <Button
+              icon={<IconHelpCircle />}
+              onClick={() => setShowHelp(true)}
+              theme="borderless"
+            ></Button>
           ) : null}
           <Button
             theme="borderless"
-            onClick={() => setShowSetting(true)}
+            onClick={() => {
+              dispatch(toggleSettingDrawerVisible());
+              dispatch(getAllConfig());
+            }}
             icon={<IconSetting />}
           ></Button>
         </span>
@@ -106,12 +93,12 @@ const Home = () => {
           key="matrix"
           dataSource={data}
           listType={listType}
-          Empty={CustomEmpty}
+          Empty={() => <CodeEmpty />}
         />
       </Content>
       <Footer className="cc-footer"></Footer>
       <CodeEdit visible={showAdd} close={() => setShowAdd(false)} />
-      <CodeSettings visible={showSetting} close={() => setShowSetting(false)} />
+      <CodeSettings />
       <CodeHelp visible={showHelp} close={() => setShowHelp(false)} />
     </Layout>
   );

@@ -16,52 +16,26 @@ import {
   IconText,
   IconCode,
 } from "@douyinfe/semi-icons";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { create, modify, remove } from "../utils/code";
-import dayjs from "dayjs";
-import { getLocalStorage } from "../utils/storage";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { saveItemData, toggleFullScreen } from "../store/codeEdit.store";
+import {
+  saveItemData,
+  toggleFullScreen,
+  changeContentType,
+  changeFormData,
+  deleteItemData,
+  toggleEditModalVisible,
+} from "../store/codeEdit.store";
 import KeyboardEventHandler from "react-keyboard-event-handler";
 import Icon from "../icons";
 import { languages } from "../utils/constant";
 
-const CodeEdit = (props) => {
-  // state
-  const [data, setData] = useState({ ...props });
-
+const CodeEdit = () => {
   // store
-  const title = useSelector((s) => s.edit.title);
-  const fullStatus = useSelector((s) => s.edit.behavior.fullScreen);
+  const { id, title, type, content, locked } = useSelector((s) => s.edit.data);
+  const { fullStatus } = useSelector((s) => s.edit.behavior);
+  const { editModalVisible } = useSelector((s) => s.edit.behavior);
   const dispatch = useDispatch();
-
-  useCallback(() => {
-    if (!props.type) {
-      const t = getLocalStorage("config").defaultType;
-      setData((p) => ({ ...p, type: t }));
-    }
-  }, [props.type]);
-
-  const genTitle = () => {
-    const cfg = getLocalStorage("config");
-    const enable = cfg && cfg.enableTitle;
-    const f = cfg && cfg.titleFormat;
-    const t = enable
-      ? dayjs(Date.now()).format(f || "[CodeSnippet]_YYYYMMDD_HH:mm:ss")
-      : "";
-    setData((p) => ({ ...p, title: t }));
-    return t;
-  };
-
-  const handleTypeChange = (value) => {
-    // console.log(value);
-    setData((p) => ({ ...p, type: value }));
-  };
-
-  const handleChange = (value) => {
-    // console.log(data);
-    setData((prev) => ({ ...prev, ...value }));
-  };
 
   const customHeader = () => {
     const { Title } = Typography;
@@ -78,15 +52,19 @@ const CodeEdit = (props) => {
           ellipsis={{ showTooltip: true }}
           style={{ lineHeight: "32px" }}
         >
-          {props.id ? `正在编辑：${props.title}` : "创建"}
+          {id ? `正在编辑：${title}` : "创建"}
         </Title>
         <span style={{ display: "flex", marginLeft: "16px" }}>
           <Select
-            disabled={props.id ? true : false}
-            defaultValue={
-              props.type ? props.type : getLocalStorage("config").defaultType
-            }
-            onChange={handleTypeChange}
+            disabled={id ? true : false}
+            defaultValue={type}
+            onChange={(v) => {
+              dispatch(
+                changeContentType({
+                  type: v.toUpperCase(),
+                })
+              );
+            }}
           >
             <Select.Option
               value="text"
@@ -98,7 +76,7 @@ const CodeEdit = (props) => {
                   文本
                 </span>
               }
-            ></Select.Option>{" "}
+            ></Select.Option>
             <Select.Option
               value="code"
               key="code"
@@ -127,7 +105,9 @@ const CodeEdit = (props) => {
             key="close"
             type="tertiary"
             icon={<IconClose />}
-            onClick={onClose}
+            onClick={() => {
+              dispatch(toggleEditModalVisible());
+            }}
           ></Button>
         </span>
       </div>
@@ -141,7 +121,9 @@ const CodeEdit = (props) => {
         key="cancel"
         type="tertiary"
         theme="borderless"
-        onClick={onClose}
+        onClick={() => {
+          dispatch(toggleEditModalVisible());
+        }}
         icon={<IconClose />}
       >
         取消
@@ -152,7 +134,15 @@ const CodeEdit = (props) => {
         key="del"
         type="danger"
         theme="borderless"
-        onClick={onDel}
+        onClick={() => {
+          dispatch(
+            deleteItemData({
+              payload: {
+                id,
+              },
+            })
+          );
+        }}
         icon={<IconDelete />}
         style={{ position: "absolute", left: "8px" }}
       >
@@ -163,7 +153,10 @@ const CodeEdit = (props) => {
       <Button
         key="save"
         theme="borderless"
-        onClick={onSave}
+        onClick={() => {
+          dispatch(saveItemData());
+          dispatch(toggleEditModalVisible());
+        }}
         icon={<IconSave />}
       >
         保存
@@ -176,34 +169,12 @@ const CodeEdit = (props) => {
     return btns;
   };
 
-  const onClose = () => {
-    setData({});
-    props.close();
-  };
-
-  const onSave = () => {
-    handleSave();
-    onClose();
-  };
-
-  const handleSave = () => {
-    dispatch(saveItemData());
-  };
-
-  const onDel = () => {
-    remove(data)
-      .then((res) => {
-        Toast.success(res);
-      })
-      .catch((err) => {
-        Toast.error(err);
-      });
-  };
-
   return (
     <Modal
-      visible={props.visible}
-      onCancel={onClose}
+      visible={editModalVisible}
+      onCancel={() => {
+        dispatch(toggleEditModalVisible());
+      }}
       closeOnEsc={true}
       fullScreen={fullStatus}
       header={customHeader()}
@@ -215,29 +186,38 @@ const CodeEdit = (props) => {
         onKeyEvent={(key, e) => {
           e.preventDefault();
           if (key === "ctrl+s" || key === "enter") {
-            onSave();
+            dispatch(saveItemData());
+            dispatch(toggleEditModalVisible());
           }
         }}
       >
         <Form
-          onValueChange={handleChange}
+          onValueChange={(v) => {
+            dispatch(
+              changeFormData({
+                type: "FORM_DATA_CHANGE",
+                payload: v,
+              })
+            );
+          }}
           initValues={{
-            ...props,
-            title: props.title ? props.title : genTitle.bind(null),
+            title,
+            content,
           }}
         >
           <Form.Input
             field="title"
-            disabled={data.locked}
+            disabled={locked}
             showClear
             label="标题"
             maxLength={30}
           />
-          {data.type === "code" && (
+          {type === "code" && (
             <Form.Select
               field="language"
               label="语言"
               filter
+              disabled={locked}
               placeholder={`支持${languages.length}种编程语言`}
               style={{ width: "100%" }}
             >
@@ -258,7 +238,7 @@ const CodeEdit = (props) => {
           <Form.TextArea
             field="content"
             label="内容"
-            disabled={data.locked}
+            disabled={locked}
             showClear
             autosize
             maxCount={99999}
