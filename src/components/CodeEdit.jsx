@@ -31,7 +31,7 @@ const CodeEdit = () => {
   const { enableGenerateTitle, generateTitleFormat } = useSelector(
     (s) => s.setting.config
   );
-  const { fullStatus } = useSelector((s) => s.edit.behavior);
+  const { fullScreen } = useSelector((s) => s.edit.behavior);
   const { editModalVisible } = useSelector((s) => s.edit.behavior);
   const dispatch = useDispatch();
 
@@ -93,7 +93,7 @@ const CodeEdit = () => {
             style={{ marginLeft: "8px" }}
             type="tertiary"
             theme="borderless"
-            icon={fullStatus ? <IconMinimize /> : <IconMaximize />}
+            icon={fullScreen ? <IconMinimize /> : <IconMaximize />}
             onClick={() => {
               dispatch(toggleFullScreen());
             }}
@@ -177,16 +177,16 @@ const CodeEdit = () => {
         dispatch(toggleEditModalVisible());
       }}
       closeOnEsc={true}
-      fullScreen={fullStatus}
+      fullScreen={fullScreen}
       header={customHeader()}
       footer={customFooter()}
       size="large"
     >
       <KeyboardEventHandler
-        handleKeys={["ctrl+s", "enter"]}
+        handleKeys={["ctrl+s"]}
         onKeyEvent={(key, e) => {
           e.preventDefault();
-          if (key === "ctrl+s" || key === "enter") {
+          if (key === "ctrl+s") {
             dispatch(saveItemData());
             dispatch(updateDataSource());
             dispatch(updateUsedVolumn());
@@ -245,9 +245,8 @@ const CodeEdit = () => {
             label="内容"
             disabled={locked}
             showClear
-            autosize
             maxCount={99999}
-            style={{ ovserflowY: "auto" }}
+            style={{ ovserflowY: "auto",height: "fit-content" }}
           ></Form.TextArea>
           {id ? <Form.Switch field="locked" label="锁定" /> : null}
         </Form>
