@@ -6,7 +6,11 @@ import {
   Popconfirm,
   Collapsible,
 } from "@douyinfe/semi-ui";
-import { IconDelete, IconGithubLogo } from "@douyinfe/semi-icons";
+import {
+  IconDelete,
+  IconGithubLogo,
+  IconInfoCircle,
+} from "@douyinfe/semi-icons";
 import { useEffect, useState } from "react";
 import { getAllCfg, setCfg } from "../utils/setting";
 import { getLocalStorage, setLocalStorage } from "../utils/storage";
@@ -27,10 +31,12 @@ const CodeSettings = (props) => {
   };
 
   const handleChange = (value) => {
-    const { listType, mode } = value;
-
+    const { listType, mode, titleFormat, enableTitle } = value;
+    setConfig({ listType, mode, titleFormat, enableTitle });
     listType && setCfg("listType", listType);
     mode && switchMode(mode);
+    titleFormat && setCfg("titleFormat", titleFormat);
+    setCfg("enableTitle", enableTitle);
   };
 
   const switchMode = (mode) => {
@@ -63,11 +69,30 @@ const CodeSettings = (props) => {
             <Form.Radio value="light">亮色</Form.Radio>
             <Form.Radio value="dark">暗色</Form.Radio>
           </Form.RadioGroup> */}
+
           <Form.RadioGroup field="listType" type="button" label="列表风格">
             <Form.Radio value="single">单列</Form.Radio>
             <Form.Radio value="double">双列</Form.Radio>
             <Form.Radio value="triple">三列</Form.Radio>
           </Form.RadioGroup>
+
+          <Form.Switch field="enableTitle" label="自动生成标题"></Form.Switch>
+
+          <Form.Input
+            showClear
+            field="titleFormat"
+            label="标题格式"
+            disabled={!config.enableTitle}
+            suffix={
+              <Button
+                icon={<IconInfoCircle />}
+                onClick={() => {
+                  window.open("https://day.js.org/docs/en/display/format");
+                }}
+              ></Button>
+            }
+          ></Form.Input>
+
           <Form.Slot label="数据管理">
             <Popconfirm
               title="确定是否清空数据"
@@ -79,6 +104,7 @@ const CodeSettings = (props) => {
               </Button>
             </Popconfirm>
           </Form.Slot>
+
           <Form.Slot label="关于">
             <Button
               onClick={() => {

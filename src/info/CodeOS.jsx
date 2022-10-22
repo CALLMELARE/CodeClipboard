@@ -24,6 +24,12 @@ const CodeOS = () => {
       >
         copy-to-clipboard
       </Text>
+      <Text
+        style={{ marginLeft: "8px" }}
+        link={{ href: "https://day.js.org/" }}
+      >
+        Day.js
+      </Text>
     </div>
   );
 };

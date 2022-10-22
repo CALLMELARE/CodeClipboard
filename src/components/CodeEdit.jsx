@@ -5,6 +5,7 @@ import {
   Button,
   Toast,
   Typography,
+  useFieldApi,
 } from "@douyinfe/semi-ui";
 import {
   IconDelete,
@@ -14,16 +15,23 @@ import {
   IconMaximize,
   IconClock,
 } from "@douyinfe/semi-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { create, modify, remove } from "../utils/code";
 import dayjs from "dayjs";
+import { getCfg } from "../utils/setting";
+import { getLocalStorage } from "../utils/storage";
 
 const CodeEdit = (props) => {
   const [data, setData] = useState({ ...props });
   const [full, setFull] = useState(false);
 
   const genTitle = () => {
-    const t = dayjs(Date.now()).format("[CodeSnippet]_YYYYMMDD_HH:mm:ss");
+    const cfg = getLocalStorage("config");
+    const enable = cfg && cfg.enableTitle;
+    const f = cfg && cfg.titleFormat;
+    const t = enable
+      ? dayjs(Date.now()).format(f || "[CodeSnippet]_YYYYMMDD_HH:mm:ss")
+      : "";
     setData((p) => ({ ...p, title: t }));
     return t;
   };

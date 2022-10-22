@@ -10,6 +10,15 @@ const getAllCfg = () => {
   });
 };
 
+const getCfg = (key) => {
+  return new Promise((resolve, reject) => {
+    const cfg = getLocalStorage("config");
+    if (cfg) {
+      resolve(cfg[`${key}`]);
+    }
+  });
+};
+
 const setCfg = (key, value) => {
   return new Promise((resolve, reject) => {
     const cfg = getLocalStorage("config");
@@ -21,4 +30,4 @@ const setCfg = (key, value) => {
   });
 };
 
-export { getAllCfg, setCfg };
+export { getAllCfg, setCfg, getCfg };

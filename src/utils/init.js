@@ -11,6 +11,8 @@ const init = () => {
     const cfg = {
       listType: "triple",
       mode: "light",
+      enableTitle: true,
+      titleFormat: "[CodeSnippet]YYYYMMDD_HH:mm:ss",
     };
     setLocalStorage("config", cfg);
   }
