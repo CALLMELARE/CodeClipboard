@@ -1,12 +1,4 @@
-import {
-  useFormApi,
-  Form,
-  Modal,
-  Button,
-  Toast,
-  Typography,
-  Select,
-} from "@douyinfe/semi-ui";
+import { Form, Modal, Button, Typography, Select } from "@douyinfe/semi-ui";
 import {
   IconDelete,
   IconSave,
@@ -16,7 +8,6 @@ import {
   IconText,
   IconCode,
 } from "@douyinfe/semi-icons";
-import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   saveItemData,
@@ -25,6 +16,7 @@ import {
   changeFormData,
   deleteItemData,
   toggleEditModalVisible,
+  resetItemData,
 } from "../store/codeEdit.store";
 import KeyboardEventHandler from "react-keyboard-event-handler";
 import Icon from "../icons";
@@ -32,7 +24,12 @@ import { languages } from "../utils/constant";
 
 const CodeEdit = () => {
   // store
-  const { id, title, type, content, locked } = useSelector((s) => s.edit.data);
+  const { id, title, type, content, language, locked } = useSelector(
+    (s) => s.edit.data
+  );
+  const { enableGenerateTitle, generateTitleFormat } = useSelector(
+    (s) => s.setting.config
+  );
   const { fullStatus } = useSelector((s) => s.edit.behavior);
   const { editModalVisible } = useSelector((s) => s.edit.behavior);
   const dispatch = useDispatch();
@@ -122,6 +119,7 @@ const CodeEdit = () => {
         type="tertiary"
         theme="borderless"
         onClick={() => {
+          dispatch(resetItemData());
           dispatch(toggleEditModalVisible());
         }}
         icon={<IconClose />}
@@ -135,13 +133,9 @@ const CodeEdit = () => {
         type="danger"
         theme="borderless"
         onClick={() => {
-          dispatch(
-            deleteItemData({
-              payload: {
-                id,
-              },
-            })
-          );
+          dispatch(resetItemData());
+          dispatch(deleteItemData());
+          dispatch(toggleEditModalVisible());
         }}
         icon={<IconDelete />}
         style={{ position: "absolute", left: "8px" }}
@@ -155,6 +149,7 @@ const CodeEdit = () => {
         theme="borderless"
         onClick={() => {
           dispatch(saveItemData());
+          dispatch(resetItemData());
           dispatch(toggleEditModalVisible());
         }}
         icon={<IconSave />}
@@ -162,7 +157,7 @@ const CodeEdit = () => {
         保存
       </Button>
     );
-    btns.push(del);
+    id && btns.push(del);
     btns.push(cancel);
     btns.push(save);
 
@@ -187,6 +182,7 @@ const CodeEdit = () => {
           e.preventDefault();
           if (key === "ctrl+s" || key === "enter") {
             dispatch(saveItemData());
+            dispatch(resetItemData());
             dispatch(toggleEditModalVisible());
           }
         }}
@@ -195,14 +191,15 @@ const CodeEdit = () => {
           onValueChange={(v) => {
             dispatch(
               changeFormData({
-                type: "FORM_DATA_CHANGE",
-                payload: v,
+                ...v,
               })
             );
           }}
           initValues={{
             title,
             content,
+            language,
+            locked,
           }}
         >
           <Form.Input
@@ -244,7 +241,7 @@ const CodeEdit = () => {
             maxCount={99999}
             style={{ ovserflowY: "auto" }}
           ></Form.TextArea>
-          <Form.Switch field="locked" label="锁定" />
+          {id ? <Form.Switch field="locked" label="锁定" /> : null}
         </Form>
       </KeyboardEventHandler>
     </Modal>

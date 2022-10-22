@@ -11,7 +11,7 @@ import {
   getLocalStorage,
   sizeFormat,
 } from "../utils/storage";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import CodeHelp from "../info/CodeHelp";
 import CodeMatrix from "../components/CodeMatrix";
 import CodeEdit from "../components/CodeEdit";
@@ -21,6 +21,12 @@ import {
   getAllConfig,
   toggleSettingDrawerVisible,
 } from "../store/codeSetting.store";
+import { toggleHelpDrawerVisible } from "../store/codeHelp.store";
+import {
+  generateTitle,
+  initItemData,
+  toggleEditModalVisible,
+} from "../store/codeEdit.store";
 
 const { Header, Footer, Content } = Layout;
 
@@ -28,12 +34,12 @@ const Home = () => {
   const [percent, setPercent] = useState(0);
   const [used, setUsed] = useState(0);
   const [maxVolumn, setMaxVolumn] = useState(5 * 1024 * 1024);
-  const [listType, setListType] = useState("");
   const [data, setData] = useState();
-  const [showAdd, setShowAdd] = useState(false);
-  const [showSetting, setShowSetting] = useState(false);
-  const [showHelp, setShowHelp] = useState(false);
 
+  // store
+  const { enableTitle, titleFormat, defaultType } = useSelector(
+    (s) => s.setting.config
+  );
   const dispatch = useDispatch();
 
   // 更新用量
@@ -42,9 +48,6 @@ const Home = () => {
   }, 3000);
 
   useEffect(() => {
-    // 加载配置
-    const cfg = getLocalStorage("config");
-    setListType(cfg.listType);
     // 加载数据
     const rawData = getLocalStorage("data");
     setData(rawData);
@@ -53,7 +56,7 @@ const Home = () => {
     const p = (used / maxVolumn) * 100;
     setUsed(used);
     setPercent(p);
-  }, [maxVolumn, used, showSetting]);
+  }, [maxVolumn, used]);
 
   return (
     <Layout>
@@ -63,7 +66,13 @@ const Home = () => {
           <Button
             theme="borderless"
             style={{ marginRight: "8px" }}
-            onClick={() => setShowAdd(true)}
+            onClick={() => {
+              dispatch(initItemData({ type: defaultType }));
+              if (enableTitle) {
+                dispatch(generateTitle({ titleFormat }));
+              }
+              dispatch(toggleEditModalVisible());
+            }}
             icon={<IconPlus />}
           ></Button>
           <IconServer style={{ marginRight: "8px" }} />
@@ -74,7 +83,9 @@ const Home = () => {
           {data && data.length ? (
             <Button
               icon={<IconHelpCircle />}
-              onClick={() => setShowHelp(true)}
+              onClick={() => {
+                dispatch(toggleHelpDrawerVisible());
+              }}
               theme="borderless"
             ></Button>
           ) : null}
@@ -92,14 +103,13 @@ const Home = () => {
         <CodeMatrix
           key="matrix"
           dataSource={data}
-          listType={listType}
           Empty={() => <CodeEmpty />}
         />
       </Content>
       <Footer className="cc-footer"></Footer>
-      <CodeEdit visible={showAdd} close={() => setShowAdd(false)} />
+      <CodeEdit />
       <CodeSettings />
-      <CodeHelp visible={showHelp} close={() => setShowHelp(false)} />
+      <CodeHelp />
     </Layout>
   );
 };

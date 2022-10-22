@@ -7,10 +7,9 @@ import {
 } from "@douyinfe/semi-ui";
 import { IconCopy, IconText, IconCode } from "@douyinfe/semi-icons";
 import copy from "copy-to-clipboard";
-import { languages } from "../utils/constant";
-import { useState } from "react";
-import CodeEdit from "./CodeEdit";
+import { useSelector, useDispatch } from "react-redux";
 import CodeHighlight from "./CodeHighlight";
+import { initItemData, toggleEditModalVisible } from "../store/codeEdit.store";
 
 const CodeCard = ({
   id,
@@ -23,17 +22,10 @@ const CodeCard = ({
   type,
 }) => {
   const { Title, Text } = Typography;
-  const [showEdit, setShowEdit] = useState(false);
 
-  const lang = languages[language];
-
-  const handleShowEdit = () => {
-    setShowEdit(true);
-  };
-
-  const handleCloseEdit = () => {
-    setShowEdit(false);
-  };
+  // store
+  const {} = useSelector((s) => s.setting.config);
+  const dispatch = useDispatch();
 
   const copyToClipboard = (data) => {
     if (data) {
@@ -56,7 +48,24 @@ const CodeCard = ({
     <>
       <div className="cc-card">
         <div className="header">
-          <span className="title" onClick={handleShowEdit}>
+          <span
+            className="title"
+            onClick={() => {
+              dispatch(
+                initItemData({
+                  id,
+                  title,
+                  content,
+                  updated,
+                  created,
+                  locked,
+                  language,
+                  type,
+                })
+              );
+              dispatch(toggleEditModalVisible());
+            }}
+          >
             <Title
               heading={5}
               ellipsis={{ showTooltip: true }}
@@ -74,16 +83,6 @@ const CodeCard = ({
               ) : null}
               {title}
             </Title>
-            {/* <Tag
-              style={{
-                backgroundColor: lang.bgColor,
-                color: lang.color,
-                marginLeft: "8px",
-              }}
-              size="small"
-            >
-              {language}
-            </Tag> */}
           </span>
           <span className="func">
             <Button
@@ -110,19 +109,6 @@ const CodeCard = ({
         </div>
         <div className="footer">{language ? language : "文本"}</div>
       </div>
-
-      <CodeEdit
-        visible={showEdit}
-        close={handleCloseEdit}
-        id={id}
-        title={title}
-        content={content}
-        updated={updated}
-        created={created}
-        locked={locked}
-        language={language}
-        type={type}
-      />
     </>
   );
 };

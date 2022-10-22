@@ -1,6 +1,7 @@
 import { Toast } from "@douyinfe/semi-ui";
 import { createSlice } from "@reduxjs/toolkit";
 import { create, modify, remove } from "../utils/code";
+import dayjs from "dayjs";
 
 export const CodeEditSlice = createSlice({
   name: "edit",
@@ -22,11 +23,38 @@ export const CodeEditSlice = createSlice({
     },
   },
   reducers: {
-    initConfig: (s, a) => {},
+    initItemData: (s, a) => {
+      const { id, title, content, updated, created, locked, language, type } =
+        a.payload;
+      if (id) {
+        s.data.id = id;
+      }
+      if (title) {
+        s.data.title = title;
+      }
+      if (content) {
+        s.data.content = content;
+      }
+      if (updated) {
+        s.data.updated = updated;
+      }
+      if (created) {
+        s.data.created = created;
+      }
+      if (locked !== undefined) {
+        s.data.locked = locked;
+      }
+      if (language) {
+        s.data.language = language;
+      }
+      if (type) {
+        s.data.type = type;
+      }
+    },
     saveItemData: (s) => {
       const { id, title, content, updated, created, locked, language, type } =
         s;
-      if (id) {
+      if (!id) {
         create({
           title,
           content,
@@ -53,8 +81,8 @@ export const CodeEditSlice = createSlice({
         });
       }
     },
-    deleteItemData: (s, a) => {
-      const id = a.payload.id;
+    deleteItemData: (s) => {
+      const id = s.data.id
       remove(id)
         .then((res) => {
           Toast.success(res);
@@ -79,17 +107,37 @@ export const CodeEditSlice = createSlice({
         s.type = "code";
       }
     },
-    changeFormData: (s, a) => {},
+    generateTitle: (s, a) => {
+      const { titleFormat } = a.payload;
+      const t = dayjs(Date.now()).format(titleFormat) || "";
+      s.data.title = t;
+    },
+    changeFormData: (s, a) => {
+      const { title, language, content, locked } = a.payload;
+      s.data.title = title;
+      s.data.language = language;
+      s.data.content = content;
+      s.data.locked = locked;
+    },
+    resetItemData: (s) => {
+      s.data.title = "";
+      s.data.language = "";
+      s.data.content = "";
+      s.data.locked = "";
+    },
   },
 });
 
 export const {
+  initItemData,
   saveItemData,
   deleteItemData,
   toggleFullScreen,
   toggleEditModalVisible,
   changeContentType,
   changeFormData,
+  generateTitle,
+  resetItemData,
 } = CodeEditSlice.actions;
 
 export default CodeEditSlice.reducer;

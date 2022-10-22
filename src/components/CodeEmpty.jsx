@@ -1,11 +1,19 @@
 import { Empty, Button } from "@douyinfe/semi-ui";
 import { IconPlus } from "@douyinfe/semi-icons";
 import { IllustrationNoResult } from "@douyinfe/semi-illustrations";
-import { useDispatch } from "react-redux";
-import { toggleEditModalVisible } from "../store/codeEdit.store";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  generateTitle,
+  initItemData,
+  toggleEditModalVisible,
+} from "../store/codeEdit.store";
 import { toggleHelpDrawerVisible } from "../store/codeHelp.store";
 
 const CodeEmpty = () => {
+  // store
+  const { enableTitle, titleFormat, defaultType } = useSelector(
+    (s) => s.setting.config
+  );
   const dispatch = useDispatch();
 
   return (
@@ -15,6 +23,10 @@ const CodeEmpty = () => {
     >
       <Button
         onClick={() => {
+          dispatch(initItemData({ type: defaultType }));
+          if (enableTitle) {
+            dispatch(generateTitle({ titleFormat }));
+          }
           dispatch(toggleEditModalVisible());
         }}
         style={{ padding: "6px 24px" }}
