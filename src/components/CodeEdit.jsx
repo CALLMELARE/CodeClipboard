@@ -21,6 +21,7 @@ import {
 import KeyboardEventHandler from "react-keyboard-event-handler";
 import Icon from "../icons";
 import { languages } from "../utils/constant";
+import { updateDataSource, updateUsedVolumn } from "../store/storage.store";
 
 const CodeEdit = () => {
   // store
@@ -134,8 +135,10 @@ const CodeEdit = () => {
         type="danger"
         theme="borderless"
         onClick={() => {
-          dispatch(resetItemData());
           dispatch(deleteItemData());
+          dispatch(resetItemData());
+          dispatch(updateDataSource());
+          dispatch(updateUsedVolumn());
           dispatch(toggleEditModalVisible());
         }}
         icon={<IconDelete />}
@@ -150,6 +153,8 @@ const CodeEdit = () => {
         theme="borderless"
         onClick={() => {
           dispatch(saveItemData());
+          dispatch(updateDataSource());
+          dispatch(updateUsedVolumn());
           dispatch(resetItemData());
           dispatch(toggleEditModalVisible());
         }}
@@ -183,6 +188,8 @@ const CodeEdit = () => {
           e.preventDefault();
           if (key === "ctrl+s" || key === "enter") {
             dispatch(saveItemData());
+            dispatch(updateDataSource());
+            dispatch(updateUsedVolumn());
             dispatch(resetItemData());
             dispatch(toggleEditModalVisible());
           }

@@ -21,6 +21,7 @@ import {
   toggleSettingDrawerVisible,
   toggleSettingOSVisible,
 } from "../store/codeSetting.store";
+import { updateDataSource, updateUsedVolumn } from "../store/storage.store";
 
 const CodeSettings = () => {
   // store
@@ -97,6 +98,8 @@ const CodeSettings = () => {
               content="此操作不可逆"
               onConfirm={() => {
                 dispatch(deleteAllData());
+                dispatch(updateDataSource());
+                dispatch(updateUsedVolumn());
               }}
             >
               <Button type="danger" icon={<IconDelete />}>
