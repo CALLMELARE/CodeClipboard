@@ -25,6 +25,7 @@ import { create, modify, remove } from "../utils/code";
 import dayjs from "dayjs";
 import { getCfg } from "../utils/setting";
 import { getLocalStorage, getLocalStorageVolume } from "../utils/storage";
+import KeyboardEventHandler from "react-keyboard-event-handler";
 
 const CodeEdit = (props) => {
   const [data, setData] = useState({ ...props });
@@ -218,32 +219,42 @@ const CodeEdit = (props) => {
       header={customHeader()}
       footer={customFooter()}
     >
-      <Form
-        onValueChange={handleChange}
-        initValues={{
-          ...props,
-          title: props.title ? props.title : genTitle.bind(null),
+      <KeyboardEventHandler
+        handleKeys={["ctrl+s"]}
+        onKeyEvent={(key, e) => {
+          e.preventDefault();
+          if (key === "ctrl+s") {
+            onSave();
+          }
         }}
       >
-        <Form.Input
-          field="title"
-          disabled={data.locked}
-          showClear
-          label="标题"
-          maxLength={30}
-        />
-        <Form.TextArea
-          field="content"
-          label="内容"
-          disabled={data.locked}
-          showClear
-          autosize
-          maxCount={99999}
-          ref={inputRef}
+        <Form
+          onValueChange={handleChange}
+          initValues={{
+            ...props,
+            title: props.title ? props.title : genTitle.bind(null),
+          }}
         >
-        </Form.TextArea>
-        <Form.Switch field="locked" label="锁定" />
-      </Form>
+          <Form.Input
+            field="title"
+            disabled={data.locked}
+            showClear
+            label="标题"
+            maxLength={30}
+            autofocus
+          />
+          <Form.TextArea
+            field="content"
+            label="内容"
+            disabled={data.locked}
+            showClear
+            autosize
+            maxCount={99999}
+            ref={inputRef}
+          ></Form.TextArea>
+          <Form.Switch field="locked" label="锁定" />
+        </Form>
+      </KeyboardEventHandler>
     </Modal>
   );
 };

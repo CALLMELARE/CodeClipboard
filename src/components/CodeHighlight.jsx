@@ -1,7 +1,7 @@
 import hljs from "highlight.js";
 import "highlight.js/styles/github.css";
 
-const CodeHighlight = ({ language = "html", content }) => {
+const CodeHighlight = ({ language = "text", content }) => {
   return (
     <pre
       style={{ fontFamily: "JetBrainsMono", fontSize: "14px" }}
