@@ -26,7 +26,6 @@ import {
   initItemData,
   toggleEditModalVisible,
 } from "../store/codeEdit.store";
-import { updateDataSource, updateUsedVolumn } from "../store/storage.store";
 
 const { Header, Footer, Content } = Layout;
 
@@ -35,16 +34,9 @@ const Home = () => {
   const { enableTitle, titleFormat, defaultType } = useSelector(
     (s) => s.setting.config
   );
-  const { maxVolumn, used, firstLoad } = useSelector((s) => s.storage.info);
+  const { maxVolumn, used } = useSelector((s) => s.storage.info);
   const { dataSource } = useSelector((s) => s.storage);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (!firstLoad) {
-      dispatch(updateDataSource());
-      dispatch(updateUsedVolumn());
-    }
-  }, [firstLoad, dispatch]);
 
   return (
     <Layout>

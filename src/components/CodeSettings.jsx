@@ -5,6 +5,8 @@ import {
   Toast,
   Popconfirm,
   Collapsible,
+  Banner,
+  Spin,
 } from "@douyinfe/semi-ui";
 import {
   IconDelete,
@@ -12,6 +14,7 @@ import {
   IconInfoCircle,
   IconText,
   IconCode,
+  IconRefresh,
 } from "@douyinfe/semi-icons";
 import { useSelector, useDispatch } from "react-redux";
 import CodeOS from "../info/CodeOS";
@@ -21,13 +24,18 @@ import {
   toggleSettingDrawerVisible,
   toggleSettingOSVisible,
 } from "../store/codeSetting.store";
-import { updateDataSource, updateUsedVolumn } from "../store/storage.store";
+import {
+  updateDataSource,
+  updateMaxVolumn,
+  updateUsedVolumn,
+} from "../store/storage.store";
 
 const CodeSettings = () => {
   // store
   const { settingDrawerVisible, settingOSVisible } = useSelector(
     (s) => s.setting.behavior
   );
+  const { isTesting } = useSelector((s) => s.storage.behavior);
   const config = useSelector((s) => s.setting.config);
   const dispatch = useDispatch();
 
@@ -40,6 +48,9 @@ const CodeSettings = () => {
       }}
     >
       <div style={{ position: "relative", paddingBottom: "30px" }}>
+        {isTesting ? (
+          <Banner type="info" icon={<Spin />} title="正在测试中..." />
+        ) : null}
         <Form
           onValueChange={(v) => {
             dispatch(
@@ -94,7 +105,18 @@ const CodeSettings = () => {
 
           <Form.Slot label="数据管理">
             <Popconfirm
-              title="确定是否清空数据"
+              title="是否开始测试"
+              content="此过程会持续数十秒"
+              onConfirm={() => {
+                dispatch(updateMaxVolumn());
+              }}
+            >
+              <Button type="danger" icon={<IconRefresh />}>
+                测试存储最大容量
+              </Button>
+            </Popconfirm>
+            <Popconfirm
+              title="是否清空数据"
               content="此操作不可逆"
               onConfirm={() => {
                 dispatch(deleteAllData());
@@ -102,7 +124,11 @@ const CodeSettings = () => {
                 dispatch(updateUsedVolumn());
               }}
             >
-              <Button type="danger" icon={<IconDelete />}>
+              <Button
+                type="danger"
+                style={{ marginLeft: "8px" }}
+                icon={<IconDelete />}
+              >
                 清除数据
               </Button>
             </Popconfirm>

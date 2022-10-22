@@ -12,10 +12,10 @@ export const CodeSettingSlice = createSlice({
       settingOSVisible: false,
     },
     config: {
-      listType: "",
-      defaultType: "",
-      enableTitle: false,
-      titleFormat: "",
+      listType: getLocalStorage("config")?.listType || "",
+      defaultType: getLocalStorage("config")?.defaultType || "",
+      enableTitle: getLocalStorage("config")?.enableTitle,
+      titleFormat: getLocalStorage("config")?.titleFormat || "",
     },
   },
   reducers: {
