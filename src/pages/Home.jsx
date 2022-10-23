@@ -54,13 +54,15 @@ const Home = () => {
         <Header className="cc-header">
           <span className="logo">Code Clipboard</span>
           <span className="func">
-            <Input
-              suffix={<IconSearch />}
-              onChange={(v) => {
-                dispatch(changeKeyword({ keyword: v }));
-              }}
-              style={{ marginRight: "8px", width: "fit-content" }}
-            ></Input>
+            {dataSource && dataSource.length ? (
+              <Input
+                suffix={<IconSearch />}
+                onChange={(v) => {
+                  dispatch(changeKeyword({ keyword: v }));
+                }}
+                style={{ marginRight: "8px", width: "fit-content" }}
+              ></Input>
+            ) : null}
             <Button
               theme="borderless"
               style={{ marginRight: "8px" }}

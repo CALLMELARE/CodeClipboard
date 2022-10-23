@@ -3,6 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import { create, modify, remove } from "../utils/code";
 import dayjs from "dayjs";
 import { getLocalStorage } from "../utils/storage";
+import hljs from "highlight.js";
+import { languages } from "../utils/constant";
 
 export const CodeEditSlice = createSlice({
   name: "edit",
@@ -53,6 +55,27 @@ export const CodeEditSlice = createSlice({
       }
     },
     saveItemData: (s) => {
+      if (!s.data.language) {
+        // 自动检测语言
+        const c = s.data.content;
+        const lang = hljs.highlightAuto(c).language;
+        console.log(lang);
+        c &&
+          languages.forEach((item) => {
+            if (item.label.toLocaleUpperCase() === lang.toLocaleUpperCase()) {
+              s.data.language = item.label;
+              Toast.success(`检测到 ${item.label}`);
+            }
+          });
+        if (c && lang === "cpp") {
+          s.data.language = "C++";
+          Toast.success(`检测到 C++`);
+        }
+        if (c && lang === "csharp") {
+          s.data.language = "C#";
+          Toast.success(`检测到 C#`);
+        }
+      }
       if (!s.data.id) {
         create(s.data).then((res) => {
           Toast.success(res);

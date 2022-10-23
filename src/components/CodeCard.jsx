@@ -11,6 +11,8 @@ import { useSelector, useDispatch } from "react-redux";
 import CodeHighlight from "./CodeHighlight";
 import { initItemData, toggleEditModalVisible } from "../store/codeEdit.store";
 import { highlightKeyword } from "../utils/highlighter";
+import Icon from "../icons";
+import { languages } from "../utils/constant";
 
 const CodeCard = ({
   id,
@@ -79,8 +81,18 @@ const CodeCard = ({
             {type === "text" ? (
               <IconText style={{ marginRight: "8px" }} />
             ) : null}
-            {type === "code" ? (
+            {type === "code" && !language ? (
               <IconCode style={{ marginRight: "8px" }} />
+            ) : null}
+            {type === "code" && language ? (
+              <Icon
+                src={
+                  languages.filter((value) => {
+                    return value.label === language;
+                  })[0].icon
+                }
+                style={{ marginRight: "8px" }}
+              />
             ) : null}
             {keyword &&
             title.toLocaleUpperCase().includes(keyword.toLocaleUpperCase()) ? (
@@ -117,7 +129,7 @@ const CodeCard = ({
           </pre>
         )}
       </div>
-      <div className="footer">{language ? language : "文本"}</div>
+      <div className="footer">{type === "code" ? language : "文本"}</div>
     </div>
   );
 };
