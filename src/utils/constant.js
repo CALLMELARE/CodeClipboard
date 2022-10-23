@@ -3,6 +3,7 @@ import {
   IconC,
   IconCpp,
   IconCSharp,
+  IconGo,
   IconJava,
   IconMarkdown,
   IconPython,
@@ -10,9 +11,18 @@ import {
   IconTypeScript,
   IconHTML,
   IconCSS,
+  IconJSON,
+  IconKotlin,
+  IconSCSS,
+  IconGraphQL,
+  IconBash,
 } from "../icons";
-
+  
 const languages = [
+  {
+    label: "Bash",
+    icon: IconBash,
+  },
   {
     label: "C",
     icon: IconC,
@@ -23,6 +33,11 @@ const languages = [
   },
   { label: "C#", icon: IconCSharp },
   { label: "CSS", icon: IconCSS },
+  { label: "Go", icon: IconGo },
+  {
+    label: "GraphQL",
+    icon: IconGraphQL,
+  },
   { label: "HTML", icon: IconHTML },
   {
     label: "Java",
@@ -33,12 +48,24 @@ const languages = [
     icon: IconJavaScript,
   },
   {
+    label: "JSON",
+    icon: IconJSON,
+  },
+  {
+    label: "Kotlin",
+    icon: IconKotlin,
+  },
+  {
     label: "Markdown",
     icon: IconMarkdown,
   },
   {
     label: "Python",
     icon: IconPython,
+  },
+  {
+    label: "SCSS",
+    icon: IconSCSS,
   },
   {
     label: "Swift",

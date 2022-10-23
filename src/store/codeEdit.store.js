@@ -2,6 +2,7 @@ import { Toast } from "@douyinfe/semi-ui";
 import { createSlice } from "@reduxjs/toolkit";
 import { create, modify, remove } from "../utils/code";
 import dayjs from "dayjs";
+import { getLocalStorage } from "../utils/storage";
 
 export const CodeEditSlice = createSlice({
   name: "edit",
@@ -14,7 +15,7 @@ export const CodeEditSlice = createSlice({
       created: "",
       locked: false,
       language: "",
-      type: "",
+      type: getLocalStorage("config")?.defaultType,
     },
     behavior: {
       // Modal

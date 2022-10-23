@@ -7,18 +7,6 @@ import CodeCard from "./CodeCard";
 
 const CodeMatrix = ({ dataSource }) => {
   const { listType } = useSelector((s) => s.setting.config);
-  const Cols = (listType) => {
-    switch (listType) {
-      case "single":
-        return "100%";
-      case "double":
-        return "50% 50%";
-      case "triple":
-        return "33.33% 33.33% 33.33%";
-      default:
-        break;
-    }
-  };
 
   const renderCards = (data) => {
     return (
@@ -29,12 +17,25 @@ const CodeMatrix = ({ dataSource }) => {
     );
   };
 
+  const Cols = (listType) => {
+    switch (listType) {
+      case "single":
+        return { cc: 1 };
+      case "double":
+        return { cc: 2 };
+      case "triple":
+        return { cc: 3 };
+      case "quadra":
+        return { cc: 4 };
+      default:
+        break;
+    }
+  };
+
   return (
     <>
       {dataSource && dataSource.length ? (
-        <div style={{ display: "grid", gridTemplateColumns: Cols(listType) }}>
-          {renderCards(dataSource)}
-        </div>
+        <div style={{ columnCount: Cols(listType).cc }}>{renderCards(dataSource)}</div>
       ) : (
         <CodeEmpty />
       )}

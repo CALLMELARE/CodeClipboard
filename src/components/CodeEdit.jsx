@@ -220,10 +220,10 @@ const CodeEdit = () => {
           {type === "code" && (
             <Form.Select
               field="language"
-              label="语言"
+              label="语言/格式"
               filter
               disabled={locked}
-              placeholder={`支持${languages.length}种编程语言`}
+              placeholder={`支持${languages.length}种编程语言/格式`}
               style={{ width: "100%" }}
             >
               {languages.map((value, index) => {

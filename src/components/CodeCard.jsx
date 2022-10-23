@@ -25,6 +25,7 @@ const CodeCard = ({
 
   // store
   const {} = useSelector((s) => s.setting.config);
+  const { listType } = useSelector((s) => s.setting.config);
   const dispatch = useDispatch();
 
   const copyToClipboard = (data) => {
@@ -45,71 +46,69 @@ const CodeCard = ({
   };
 
   return (
-    <>
-      <div className="cc-card">
-        <div className="header">
-          <span
-            className="title"
-            onClick={() => {
-              dispatch(
-                initItemData({
-                  id,
-                  title,
-                  content,
-                  updated,
-                  created,
-                  locked,
-                  language,
-                  type,
-                })
-              );
-              dispatch(toggleEditModalVisible());
+    <div className="cc-card" style={{}}>
+      <div className="header">
+        <span
+          className="title"
+          onClick={() => {
+            dispatch(
+              initItemData({
+                id,
+                title,
+                content,
+                updated,
+                created,
+                locked,
+                language,
+                type,
+              })
+            );
+            dispatch(toggleEditModalVisible());
+          }}
+        >
+          <Title
+            heading={5}
+            ellipsis={{ showTooltip: true }}
+            style={{
+              lineHeight: "32px",
+              display: "flex",
+              alignItems: "center",
             }}
           >
-            <Title
-              heading={5}
-              ellipsis={{ showTooltip: true }}
-              style={{
-                lineHeight: "32px",
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              {type === "text" ? (
-                <IconText style={{ marginRight: "8px" }} />
-              ) : null}
-              {type === "code" ? (
-                <IconCode style={{ marginRight: "8px" }} />
-              ) : null}
-              {title}
-            </Title>
-          </span>
-          <span className="func">
-            <Button
-              theme="borderless"
-              icon={<IconCopy style={{ color: "#a9a9a9" }} />}
-              onClick={copyToClipboard.bind(null, content)}
-            ></Button>
-          </span>
-        </div>
-        <div className="content">
-          {type === "code" && (
-            <CodeHighlight language={language} content={content} />
-          )}
-          {type === "text" && (
-            <pre
-              style={{
-                fontFamily: "JetBrainsMono",
-                fontSize: "14px",
-              }}
-            >
-              {content}
-            </pre>
-          )}
-        </div>
-        <div className="footer">{language ? language : "文本"}</div>
+            {type === "text" ? (
+              <IconText style={{ marginRight: "8px" }} />
+            ) : null}
+            {type === "code" ? (
+              <IconCode style={{ marginRight: "8px" }} />
+            ) : null}
+            {title}
+          </Title>
+        </span>
+        <span className="func">
+          <Button
+            theme="borderless"
+            icon={<IconCopy style={{ color: "#a9a9a9" }} />}
+            onClick={copyToClipboard.bind(null, content)}
+          ></Button>
+        </span>
       </div>
-    </>
+      <div className="content">
+        {type === "code" && (
+          <CodeHighlight language={language} content={content} />
+        )}
+        {type === "text" && (
+          <pre
+            style={{
+              fontFamily: "JetBrainsMono",
+              fontSize: "14px",
+            }}
+          >
+            {content}
+          </pre>
+        )}
+      </div>
+      <div className="footer">{language ? language : "文本"}</div>
+    </div>
   );
 };
 

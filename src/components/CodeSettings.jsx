@@ -71,6 +71,7 @@ const CodeSettings = () => {
             <Form.Radio value="single">单列</Form.Radio>
             <Form.Radio value="double">双列</Form.Radio>
             <Form.Radio value="triple">三列</Form.Radio>
+            <Form.Radio value="quadra">四列</Form.Radio>
           </Form.RadioGroup>
 
           <Form.RadioGroup
