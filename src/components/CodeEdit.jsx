@@ -59,7 +59,7 @@ const CodeEdit = () => {
             onChange={(v) => {
               dispatch(
                 changeContentType({
-                  type: v.toUpperCase(),
+                  type: v,
                 })
               );
             }}

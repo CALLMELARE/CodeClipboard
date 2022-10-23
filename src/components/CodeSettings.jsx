@@ -2,11 +2,11 @@ import {
   Form,
   SideSheet,
   Button,
-  Toast,
   Popconfirm,
   Collapsible,
   Banner,
   Spin,
+  Collapse,
 } from "@douyinfe/semi-ui";
 import {
   IconDelete,
@@ -94,20 +94,21 @@ const CodeSettings = () => {
 
           <Form.Switch field="enableTitle" label="自动生成标题"></Form.Switch>
 
-          <Form.Input
-            showClear
-            field="titleFormat"
-            label="标题格式"
-            disabled={!config.enableTitle}
-            suffix={
-              <Button
-                icon={<IconInfoCircle />}
-                onClick={() => {
-                  window.open("https://day.js.org/docs/en/display/format");
-                }}
-              ></Button>
-            }
-          ></Form.Input>
+          <Collapsible isOpen={config.enableTitle} keepDOM>
+            <Form.Input
+              showClear
+              field="titleFormat"
+              label="标题格式"
+              suffix={
+                <Button
+                  icon={<IconInfoCircle />}
+                  onClick={() => {
+                    window.open("https://day.js.org/docs/en/display/format");
+                  }}
+                ></Button>
+              }
+            ></Form.Input>
+          </Collapsible>
 
           <Form.Slot label="数据管理">
             <Popconfirm
@@ -118,7 +119,7 @@ const CodeSettings = () => {
               }}
             >
               <Button type="danger" icon={<IconRefresh />}>
-                测试存储最大容量
+                测试最大存储容量
               </Button>
             </Popconfirm>
             <Popconfirm

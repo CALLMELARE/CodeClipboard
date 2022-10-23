@@ -81,11 +81,12 @@ export const CodeEditSlice = createSlice({
       s.behavior.editModalVisible = !prev;
     },
     changeContentType: (s, a) => {
-      if (a.type === "TEXT") {
-        s.type = "text";
+      const { type } = a.payload;
+      if (type === "text") {
+        s.data.type = "text";
       }
-      if (a.type === "CODE") {
-        s.type = "code";
+      if (type === "code") {
+        s.data.type = "code";
       }
     },
     generateTitle: (s, a) => {

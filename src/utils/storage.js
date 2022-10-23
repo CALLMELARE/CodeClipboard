@@ -36,7 +36,7 @@ const getLocalStorage = (key) => {
   if (!key) return;
   const value = localStorage.getItem(key);
   if (value) {
-    if (parseFloat(value).toString() != "NaN") {
+    if (parseFloat(value).toString() !== "NaN") {
       return parseFloat(value);
     }
     try {
