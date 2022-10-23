@@ -54,7 +54,6 @@ const CodeEdit = () => {
         </Title>
         <span style={{ display: "flex", marginLeft: "16px" }}>
           <Select
-            disabled={id ? true : false}
             defaultValue={type}
             onChange={(v) => {
               dispatch(
@@ -220,7 +219,7 @@ const CodeEdit = () => {
           {type === "code" && (
             <Form.Select
               field="language"
-              label={`语言/格式${language?"":"（自动检测）"}`}
+              label={`语言/格式${language ? "" : "（自动检测）"}`}
               filter
               disabled={locked}
               placeholder={`支持${languages.length}种编程语言/格式`}
