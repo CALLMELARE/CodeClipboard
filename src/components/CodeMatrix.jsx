@@ -1,12 +1,13 @@
-import {} from "@douyinfe/semi-ui";
-import { useEffect, useState } from "react";
+import { Empty } from "@douyinfe/semi-ui";
 import { useSelector } from "react-redux";
 import { parse } from "../utils/compiler";
 import CodeEmpty from "./CodeEmpty";
 import CodeCard from "./CodeCard";
 
-const CodeMatrix = ({ dataSource }) => {
+const CodeMatrix = () => {
   const { listType } = useSelector((s) => s.setting.config);
+  const { keyword, searchResults } = useSelector((s) => s.storage.search);
+  const { dataSource } = useSelector((s) => s.storage);
 
   const renderCards = (data) => {
     return (
@@ -35,9 +36,21 @@ const CodeMatrix = ({ dataSource }) => {
   return (
     <>
       {dataSource && dataSource.length ? (
-        <div style={{ columnCount: Cols(listType).cc }}>{renderCards(dataSource)}</div>
+        <div style={{ columnCount: Cols(listType).cc, columnGap: "16px" }}>
+          {keyword
+            ? searchResults.length
+              ? renderCards(searchResults)
+              : null
+            : renderCards(dataSource)}
+        </div>
       ) : (
         <CodeEmpty />
+      )}
+      {keyword && !searchResults.length && (
+        <Empty
+          title="暂未找到匹配的筛选结果"
+          description={`"${keyword}"`}
+        ></Empty>
       )}
     </>
   );

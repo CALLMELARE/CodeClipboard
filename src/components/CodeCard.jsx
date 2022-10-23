@@ -10,6 +10,7 @@ import copy from "copy-to-clipboard";
 import { useSelector, useDispatch } from "react-redux";
 import CodeHighlight from "./CodeHighlight";
 import { initItemData, toggleEditModalVisible } from "../store/codeEdit.store";
+import { highlightKeyword } from "../utils/highlighter";
 
 const CodeCard = ({
   id,
@@ -25,7 +26,7 @@ const CodeCard = ({
 
   // store
   const {} = useSelector((s) => s.setting.config);
-  const { listType } = useSelector((s) => s.setting.config);
+  const { keyword } = useSelector((s) => s.storage.search);
   const dispatch = useDispatch();
 
   const copyToClipboard = (data) => {
@@ -46,7 +47,7 @@ const CodeCard = ({
   };
 
   return (
-    <div className="cc-card" style={{}}>
+    <div className="cc-card">
       <div className="header">
         <span
           className="title"
@@ -81,7 +82,16 @@ const CodeCard = ({
             {type === "code" ? (
               <IconCode style={{ marginRight: "8px" }} />
             ) : null}
-            {title}
+            {keyword &&
+            title.toLocaleUpperCase().includes(keyword.toLocaleUpperCase()) ? (
+              <span
+                dangerouslySetInnerHTML={{
+                  __html: highlightKeyword(title, keyword),
+                }}
+              ></span>
+            ) : (
+              title
+            )}
           </Title>
         </span>
         <span className="func">

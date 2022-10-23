@@ -17,6 +17,11 @@ export const StorageSlice = createSlice({
       maxVolumn: 5 * 1024 * 1024,
       used: getLocalStorageVolume() || 0,
     },
+    search: {
+      serachPanelVisible: false,
+      keyword: "",
+      searchResults: [],
+    },
   },
   reducers: {
     updateDataSource: (s) => {
@@ -50,6 +55,24 @@ export const StorageSlice = createSlice({
         a();
       }, 0.1);
     },
+    toggleSearchPanelVisible: (s) => {
+      s.search.serachPanelVisible = !s.search.serachPanelVisible;
+    },
+    changeKeyword: (s, a) => {
+      s.search.keyword = a.payload.keyword;
+      const result = s.dataSource.filter((item) => {
+        return (
+          item.h
+            .toLocaleUpperCase()
+            .includes(s.search.keyword.toLocaleUpperCase()) ||
+          item.c
+            .toLocaleUpperCase()
+            .includes(s.search.keyword.toLocaleUpperCase())
+        );
+      });
+      console.log(result);
+      s.search.searchResults = result;
+    },
   },
 });
 
@@ -58,6 +81,8 @@ export const {
   updateUsedVolumn,
   toggleFirstLoad,
   updateMaxVolumn,
+  toggleSearchPanelVisible,
+  changeKeyword,
 } = StorageSlice.actions;
 
 export default StorageSlice.reducer;

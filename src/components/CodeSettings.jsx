@@ -48,7 +48,7 @@ const CodeSettings = () => {
         dispatch(toggleSettingDrawerVisible());
       }}
     >
-      <div style={{ position: "relative", paddingBottom: "30px" }}>
+      <div className="cc-setting" style={{ position: "relative", paddingBottom: "30px" }}>
         {isTesting ? (
           <Banner
             type="info"
@@ -67,6 +67,8 @@ const CodeSettings = () => {
           }}
           initValues={config}
         >
+
+          
           <Form.RadioGroup field="listType" type="button" label="列表风格">
             <Form.Radio value="single">单列</Form.Radio>
             <Form.Radio value="double">双列</Form.Radio>
@@ -99,7 +101,7 @@ const CodeSettings = () => {
             <Form.Input
               showClear
               field="titleFormat"
-              label="标题格式"
+              label="生成标题格式"
               suffix={
                 <Button
                   icon={<IconInfoCircle />}
@@ -113,17 +115,6 @@ const CodeSettings = () => {
 
           <Form.Slot label="数据管理">
             <Popconfirm
-              title="是否开始测试"
-              content="此过程会持续数十秒至数分钟，并可能导致严重的电脑卡顿"
-              onConfirm={() => {
-                dispatch(updateMaxVolumn());
-              }}
-            >
-              <Button type="danger" icon={<IconRefresh />}>
-                测试最大存储容量
-              </Button>
-            </Popconfirm>
-            <Popconfirm
               title="是否清空数据"
               content="此操作不可逆"
               onConfirm={() => {
@@ -133,12 +124,22 @@ const CodeSettings = () => {
                 dispatch(updateUsedVolumn());
               }}
             >
-              <Button
-                type="danger"
-                style={{ marginLeft: "8px" }}
-                icon={<IconDelete />}
-              >
+              <Button type="danger" icon={<IconDelete />}>
                 清除数据
+              </Button>
+            </Popconfirm>
+          </Form.Slot>
+
+          <Form.Slot label="实验性功能">
+            <Popconfirm
+              title="是否开始测试"
+              content="此过程会持续数十秒至数分钟，并可能导致严重的电脑卡顿"
+              onConfirm={() => {
+                dispatch(updateMaxVolumn());
+              }}
+            >
+              <Button type="danger" icon={<IconRefresh />}>
+                测试最大存储容量
               </Button>
             </Popconfirm>
           </Form.Slot>
