@@ -220,7 +220,7 @@ const CodeEdit = () => {
           {type === "code" && (
             <Form.Select
               field="language"
-              label="语言/格式"
+              label={`语言/格式${language?"":"（自动检测）"}`}
               filter
               disabled={locked}
               placeholder={`支持${languages.length}种编程语言/格式`}
@@ -246,7 +246,7 @@ const CodeEdit = () => {
             disabled={locked}
             showClear
             maxCount={99999}
-            style={{ ovserflowY: "auto",height: "fit-content" }}
+            style={{ ovserflowY: "auto", height: "fit-content" }}
           ></Form.TextArea>
           {id ? <Form.Switch field="locked" label="锁定" /> : null}
         </Form>
