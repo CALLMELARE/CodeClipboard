@@ -66,7 +66,7 @@ const remove = (v) => {
     let data = getLocalStorage("data");
     let index = null;
     for (let item in data) {
-      if (data[item].i === v.id) {
+      if (data[item].i === v) {
         index = item;
         break;
       }

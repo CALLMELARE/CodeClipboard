@@ -1,7 +1,9 @@
-import { SideSheet, Typography } from "@douyinfe/semi-ui";
+import { SideSheet, Tooltip, Typography } from "@douyinfe/semi-ui";
 import { IconPlus, IconSetting, IconCopy } from "@douyinfe/semi-icons";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleHelpDrawerVisible } from "../store/codeHelp.store";
+import { languages } from "../utils/constant";
+import Icon from "../icons";
 
 const CodeHelp = () => {
   // store
@@ -58,10 +60,24 @@ const CodeHelp = () => {
       <Paragraph>
         在设置菜单里你可以找到测试最大存储容量的选项，其原理是不断尝试存储字符串直至报错。
       </Paragraph>
-      <Title heading={5} style={{ margin: "8px 0" }}>
+      {/* <Title heading={5} style={{ margin: "8px 0" }}>
         数据如何迁移？
       </Title>
-      <Paragraph>导出和导入是计划中支持的功能。</Paragraph>
+      <Paragraph>导出和导入是计划中支持的功能。</Paragraph> */}
+      <Title heading={5} style={{ margin: "8px 0" }}>
+        语法高亮支持哪些语言/格式？
+      </Title>
+      <div style={{ margin: "8px 0" }}>
+        {languages.map((item, index) => {
+          return (
+            <Tooltip content={`${item.label}`}>
+              <span style={{ fontSize: "20px" }}>
+                <Icon src={item.icon} style={{ marginRight: "8px" }} />
+              </span>
+            </Tooltip>
+          );
+        })}
+      </div>
     </SideSheet>
   );
 };
