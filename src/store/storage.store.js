@@ -1,5 +1,7 @@
 import { Toast } from "@douyinfe/semi-ui";
 import { createSlice } from "@reduxjs/toolkit";
+import dayjs from "dayjs";
+import { exportData } from "../utils/import";
 import {
   getLocalStorage,
   getLocalStorageVolume,
@@ -73,6 +75,14 @@ export const StorageSlice = createSlice({
       console.log(result);
       s.search.searchResults = result;
     },
+    exportCodeData: (s, a) => {
+      const time = dayjs(new Date()).format("YYYYMMDDHHmmss");
+      const filename = `CodeClipboard_${time}.json`;
+      exportData(localStorage.getItem("data"), filename);
+      Toast.success({
+        content: `已导出${s.dataSource.length}条数据`,
+      });
+    },
   },
 });
 
@@ -83,6 +93,7 @@ export const {
   updateMaxVolumn,
   toggleSearchPanelVisible,
   changeKeyword,
+  exportCodeData,
 } = StorageSlice.actions;
 
 export default StorageSlice.reducer;
