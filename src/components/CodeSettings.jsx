@@ -6,7 +6,6 @@ import {
   Collapsible,
   Banner,
   Spin,
-  Collapse,
 } from "@douyinfe/semi-ui";
 import {
   IconDelete,
@@ -15,6 +14,7 @@ import {
   IconText,
   IconCode,
   IconRefresh,
+  IconExport,
 } from "@douyinfe/semi-icons";
 import { useSelector, useDispatch } from "react-redux";
 import CodeOS from "../info/CodeOS";
@@ -25,11 +25,13 @@ import {
   toggleSettingOSVisible,
 } from "../store/codeSetting.store";
 import {
+  exportCodeData,
   updateDataSource,
   updateMaxVolumn,
   updateUsedVolumn,
 } from "../store/storage.store";
 import { removeLocalStorage } from "../utils/storage";
+import { exportData } from "../utils/import";
 
 const CodeSettings = () => {
   // store
@@ -48,7 +50,10 @@ const CodeSettings = () => {
         dispatch(toggleSettingDrawerVisible());
       }}
     >
-      <div className="cc-setting" style={{ position: "relative", paddingBottom: "30px" }}>
+      <div
+        className="cc-setting"
+        style={{ position: "relative", paddingBottom: "30px" }}
+      >
         {isTesting ? (
           <Banner
             type="info"
@@ -67,8 +72,6 @@ const CodeSettings = () => {
           }}
           initValues={config}
         >
-
-          
           <Form.RadioGroup field="listType" type="button" label="列表风格">
             <Form.Radio value="single">单列</Form.Radio>
             <Form.Radio value="double">双列</Form.Radio>
@@ -114,6 +117,14 @@ const CodeSettings = () => {
           </Collapsible>
 
           <Form.Slot label="数据管理">
+            <Button
+              onClick={() => {
+                dispatch(exportCodeData());
+              }}
+              icon={<IconExport />}
+            >
+              导出数据
+            </Button>
             <Popconfirm
               title="是否清空数据"
               content="此操作不可逆"
@@ -124,7 +135,11 @@ const CodeSettings = () => {
                 dispatch(updateUsedVolumn());
               }}
             >
-              <Button type="danger" icon={<IconDelete />}>
+              <Button
+                type="danger"
+                icon={<IconDelete />}
+                style={{ marginLeft: "8px" }}
+              >
                 清除数据
               </Button>
             </Popconfirm>
