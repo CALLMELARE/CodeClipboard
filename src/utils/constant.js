@@ -16,9 +16,26 @@ import {
   IconSCSS,
   IconGraphQL,
   IconBash,
+  IconRuby,
+  IconDockerfile,
+  IconNginx,
+  IconMatlab,
+  IconDart,
+  IconDjango,
+  IconApache,
+  IconArduino,
+  IconSQL,
 } from "../icons";
-  
+
 const languages = [
+  {
+    label: "Apache",
+    icon: IconApache,
+  },
+  {
+    label: "Arduino",
+    icon: IconArduino,
+  },
   {
     label: "Bash",
     icon: IconBash,
@@ -33,6 +50,18 @@ const languages = [
   },
   { label: "C#", icon: IconCSharp },
   { label: "CSS", icon: IconCSS },
+  {
+    label: "Dart",
+    icon: IconDart,
+  },
+  {
+    label: "Django",
+    icon: IconDjango,
+  },
+  {
+    label: "Dockerfile",
+    icon: IconDockerfile,
+  },
   { label: "Go", icon: IconGo },
   {
     label: "GraphQL",
@@ -60,12 +89,28 @@ const languages = [
     icon: IconMarkdown,
   },
   {
+    label: "Matlab",
+    icon: IconMatlab,
+  },
+  {
+    label: "Nginx",
+    icon: IconNginx,
+  },
+  {
     label: "Python",
     icon: IconPython,
   },
   {
+    label: "Ruby",
+    icon: IconRuby,
+  },
+  {
     label: "SCSS",
     icon: IconSCSS,
+  },
+  {
+    label: "SQL",
+    icon: IconSQL,
   },
   {
     label: "Swift",
