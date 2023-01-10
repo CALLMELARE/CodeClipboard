@@ -19,6 +19,4 @@ const exportData = (data, filename) => {
   });
 };
 
-const importDate = (file) => {};
-
-export { exportData, importDate };
+export { exportData };
