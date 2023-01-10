@@ -6,6 +6,7 @@ import {
   getLocalStorage,
   getLocalStorageVolume,
   removeLocalStorage,
+  setLocalStorage,
 } from "../utils/storage";
 
 export const StorageSlice = createSlice({
@@ -83,6 +84,28 @@ export const StorageSlice = createSlice({
         content: `已导出${s.dataSource.length}条数据`,
       });
     },
+    importCodeData: (s, a) => {
+      const fr = new FileReader();
+      const file = a.payload;
+      fr.readAsText(file.fileInstance);
+      fr.onload = () => {
+        try {
+          const content = JSON.parse(fr.result);
+          const raw = getLocalStorage("data");
+          let idList = [];
+          raw.forEach((item) => {
+            idList.push(item.id);
+          });
+
+          setLocalStorage("data", JSON.stringify([...raw, ...content]));
+          Toast.success("成功导入" + content.length + "条数据");
+          updateDataSource();
+          updateUsedVolumn();
+        } catch (err) {
+          Toast.error("发生错误:" + err);
+        }
+      };
+    },
   },
 });
 
@@ -94,6 +117,7 @@ export const {
   toggleSearchPanelVisible,
   changeKeyword,
   exportCodeData,
+  importCodeData,
 } = StorageSlice.actions;
 
 export default StorageSlice.reducer;

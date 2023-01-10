@@ -6,6 +6,8 @@ import {
   Collapsible,
   Banner,
   Spin,
+  Upload,
+  Toast,
 } from "@douyinfe/semi-ui";
 import {
   IconDelete,
@@ -15,6 +17,7 @@ import {
   IconCode,
   IconRefresh,
   IconExport,
+  IconImport,
 } from "@douyinfe/semi-icons";
 import { useSelector, useDispatch } from "react-redux";
 import CodeOS from "../info/CodeOS";
@@ -26,12 +29,13 @@ import {
 } from "../store/codeSetting.store";
 import {
   exportCodeData,
+  importCodeData,
   updateDataSource,
   updateMaxVolumn,
   updateUsedVolumn,
 } from "../store/storage.store";
 import { removeLocalStorage } from "../utils/storage";
-import { exportData } from "../utils/import";
+import { useRef } from "react";
 
 const CodeSettings = () => {
   // store
@@ -41,6 +45,11 @@ const CodeSettings = () => {
   const { isTesting } = useSelector((s) => s.storage.behavior);
   const config = useSelector((s) => s.setting.config);
   const dispatch = useDispatch();
+  const uploadRef = useRef();
+
+  const handleUpload = ({ file }) => {
+    dispatch(importCodeData(file));
+  };
 
   return (
     <SideSheet
@@ -117,32 +126,43 @@ const CodeSettings = () => {
           </Collapsible>
 
           <Form.Slot label="数据管理">
-            <Button
-              onClick={() => {
-                dispatch(exportCodeData());
-              }}
-              icon={<IconExport />}
-            >
-              导出数据
-            </Button>
-            <Popconfirm
-              title="是否清空数据"
-              content="此操作不可逆"
-              onConfirm={() => {
-                dispatch(deleteAllData());
-                removeLocalStorage("test");
-                dispatch(updateDataSource());
-                dispatch(updateUsedVolumn());
-              }}
-            >
+            <div style={{ display: "flex" }}>
               <Button
-                type="danger"
-                icon={<IconDelete />}
-                style={{ marginLeft: "8px" }}
+                onClick={() => {
+                  dispatch(exportCodeData());
+                }}
+                icon={<IconExport />}
               >
-                清除数据
+                导出数据
               </Button>
-            </Popconfirm>
+              <Upload
+                ref={uploadRef}
+                customRequest={handleUpload}
+                showUploadList={false}
+              >
+                <Button icon={<IconImport />} style={{ marginLeft: "8px" }}>
+                  导入数据
+                </Button>
+              </Upload>
+              <Popconfirm
+                title="是否清空数据"
+                content="此操作不可逆"
+                onConfirm={() => {
+                  dispatch(deleteAllData());
+                  removeLocalStorage("test");
+                  dispatch(updateDataSource());
+                  dispatch(updateUsedVolumn());
+                }}
+              >
+                <Button
+                  type="danger"
+                  icon={<IconDelete />}
+                  style={{ marginLeft: "8px" }}
+                >
+                  清除数据
+                </Button>
+              </Popconfirm>
+            </div>
           </Form.Slot>
 
           <Form.Slot label="实验性功能">
