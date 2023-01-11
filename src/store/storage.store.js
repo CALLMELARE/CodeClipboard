@@ -94,11 +94,21 @@ export const StorageSlice = createSlice({
           const raw = getLocalStorage("data");
           let idList = [];
           raw.forEach((item) => {
-            idList.push(item.id);
+            idList.push(item.i);
           });
-
-          setLocalStorage("data", JSON.stringify([...raw, ...content]));
-          Toast.success("成功导入" + content.length + "条数据");
+          console.log(idList);
+          let tempList = [];
+          let repeat = 0;
+          content.forEach((item) => {
+            if (idList.indexOf(item.i) !== -1) {
+              // exist
+              repeat = repeat + 1;
+            } else {
+              tempList.push(item);
+            }
+          });
+          setLocalStorage("data", JSON.stringify([...raw, ...tempList]));
+          Toast.success("成功导入" + tempList.length + "条数据");
           updateDataSource();
           updateUsedVolumn();
         } catch (err) {
