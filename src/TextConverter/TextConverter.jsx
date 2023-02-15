@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
 
-import { Layout, Dropdown } from "@douyinfe/semi-ui";
+import { Layout, Dropdown, TextArea } from "@douyinfe/semi-ui";
 import {} from "@douyinfe/semi-icons";
 import { NavLink } from "react-router-dom";
+import ResultMatrix from "./components/ResultMatrix";
 
 const { Header, Footer, Content } = Layout;
 
 const TextConverter = () => {
+  // 组件内状态
+  const [state, setState] = useState({ origin: "" });
+
   return (
     <Layout>
       <Header className="cc-header">
@@ -27,7 +31,21 @@ const TextConverter = () => {
         </Dropdown>
         <span className="func"></span>
       </Header>
-      <Content style={{ padding: "16px" }}></Content>
+      <Content style={{ padding: "16px" }}>
+        <div className="tc-textarea">
+          <TextArea
+            placeholder="请输入…"
+            showClear
+            value={state.origin}
+            onChange={(v) => {
+              setState((e) => ({ ...e, origin: v }));
+            }}
+          />
+        </div>
+        <div className="tc-result">
+          <ResultMatrix origin={state.origin} />
+        </div>
+      </Content>
       <Footer className="cc-footer"></Footer>
     </Layout>
   );
