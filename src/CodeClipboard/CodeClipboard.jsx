@@ -1,4 +1,6 @@
-import { Input, Button, Layout, Progress } from "@douyinfe/semi-ui";
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Input, Button, Layout, Progress, Dropdown } from "@douyinfe/semi-ui";
 import {
   IconServer,
   IconSetting,
@@ -6,32 +8,26 @@ import {
   IconHelpCircle,
   IconSearch,
 } from "@douyinfe/semi-icons";
-import { useEffect, useState } from "react";
 import { sizeFormat } from "../utils/storage";
-import { useSelector, useDispatch } from "react-redux";
-import CodeHelp from "../info/CodeHelp";
-import CodeMatrix from "../components/CodeMatrix";
-import CodeEdit from "../components/CodeEdit";
-import CodeSettings from "../components/CodeSettings";
+import CodeHelp from "./info/CodeHelp";
+import CodeMatrix from "./components/CodeMatrix";
+import CodeEdit from "./components/CodeEdit";
+import CodeSettings from "./components/CodeSettings";
 import {
   getAllConfig,
   toggleSettingDrawerVisible,
-} from "../store/codeSetting.store";
-import { toggleHelpDrawerVisible } from "../store/codeHelp.store";
+} from "./store/codeSetting.store";
+import { toggleHelpDrawerVisible } from "./store/codeHelp.store";
 import {
   generateTitle,
   initItemData,
   toggleEditModalVisible,
-} from "../store/codeEdit.store";
-import KeyboardEventHandler from "react-keyboard-event-handler";
-import {
-  changeKeyword,
-  toggleSearchPanelVisible,
-} from "../store/storage.store";
+} from "./store/codeEdit.store";
+import { changeKeyword } from "./store/storage.store";
 
 const { Header, Footer, Content } = Layout;
 
-const Home = () => {
+const CodeClipboard = () => {
   // store
   const { enableTitle, titleFormat, defaultType } = useSelector(
     (s) => s.setting.config
@@ -43,7 +39,17 @@ const Home = () => {
   return (
     <Layout>
       <Header className="cc-header">
-        <span className="logo">Code Clipboard</span>
+        <Dropdown
+          trigger={"hover"}
+          position={"bottomLeft"}
+          render={
+            <Dropdown.Menu>
+              <Dropdown.Item>Text Converter</Dropdown.Item>
+            </Dropdown.Menu>
+          }
+        >
+          <span className="logo">Code Clipboard</span>
+        </Dropdown>
         <span className="func">
           {dataSource && dataSource.length ? (
             <Input
@@ -105,4 +111,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default CodeClipboard;

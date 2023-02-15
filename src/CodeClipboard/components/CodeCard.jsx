@@ -1,18 +1,12 @@
-import {
-  Button,
-  Notification,
-  Tag,
-  Modal,
-  Typography,
-} from "@douyinfe/semi-ui";
+import { useSelector, useDispatch } from "react-redux";
+import { Button, Notification, Typography } from "@douyinfe/semi-ui";
 import { IconCopy, IconText, IconCode } from "@douyinfe/semi-icons";
 import copy from "copy-to-clipboard";
-import { useSelector, useDispatch } from "react-redux";
 import CodeHighlight from "./CodeHighlight";
 import { initItemData, toggleEditModalVisible } from "../store/codeEdit.store";
-import { highlightKeyword } from "../utils/highlighter";
-import Icon from "../icons";
-import { languages } from "../utils/constant";
+import { highlightKeyword } from "../../utils/highlighter";
+import Icon from "../../icons";
+import { languages } from "../../utils/constant";
 
 const CodeCard = ({
   id,
@@ -24,7 +18,7 @@ const CodeCard = ({
   language,
   type,
 }) => {
-  const { Title, Text } = Typography;
+  const { Title } = Typography;
 
   // store
   const {} = useSelector((s) => s.setting.config);

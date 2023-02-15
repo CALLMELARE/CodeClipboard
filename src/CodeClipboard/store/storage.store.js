@@ -1,13 +1,13 @@
 import { Toast } from "@douyinfe/semi-ui";
 import { createSlice } from "@reduxjs/toolkit";
 import dayjs from "dayjs";
-import { exportData } from "../utils/import";
+import { exportData } from "../../utils/import";
 import {
   getLocalStorage,
   getLocalStorageVolume,
   removeLocalStorage,
   setLocalStorage,
-} from "../utils/storage";
+} from "../../utils/storage";
 
 export const StorageSlice = createSlice({
   name: "storage",

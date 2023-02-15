@@ -1,6 +1,6 @@
 import { Empty } from "@douyinfe/semi-ui";
 import { useSelector } from "react-redux";
-import { parse } from "../utils/compiler";
+import { parse } from "../../utils/compiler";
 import CodeEmpty from "./CodeEmpty";
 import CodeCard from "./CodeCard";
 

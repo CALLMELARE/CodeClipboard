@@ -19,8 +19,8 @@ import {
   resetItemData,
 } from "../store/codeEdit.store";
 import KeyboardEventHandler from "react-keyboard-event-handler";
-import Icon from "../icons";
-import { languages } from "../utils/constant";
+import Icon from "../../icons";
+import { languages } from "../../utils/constant";
 import { updateDataSource, updateUsedVolumn } from "../store/storage.store";
 
 const CodeEdit = () => {

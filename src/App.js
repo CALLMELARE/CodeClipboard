@@ -1,15 +1,11 @@
-import Home from "./pages/Home";
+import CodeClipboard from "./CodeClipboard";
 import "./App.css";
-import { Provider } from "react-redux";
-import store from "./store";
+
 import init from "./utils/init";
 init();
+
 function App() {
-  return (
-    <Provider store={store}>
-      <Home />
-    </Provider>
-  );
+  return <CodeClipboard />;
 }
 
 export default App;

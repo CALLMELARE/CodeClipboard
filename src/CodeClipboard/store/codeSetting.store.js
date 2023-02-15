@@ -1,7 +1,7 @@
 import { Toast } from "@douyinfe/semi-ui";
 import { createSlice } from "@reduxjs/toolkit";
-import { setCfg } from "../utils/setting";
-import { getLocalStorage, setLocalStorage } from "../utils/storage";
+import { setCfg } from "../../utils/setting";
+import { getLocalStorage, setLocalStorage } from "../../utils/storage";
 
 export const CodeSettingSlice = createSlice({
   name: "setting",

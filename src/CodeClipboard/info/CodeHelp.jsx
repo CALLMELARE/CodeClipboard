@@ -2,8 +2,8 @@ import { SideSheet, Tooltip, Typography } from "@douyinfe/semi-ui";
 import { IconPlus, IconSetting, IconCopy } from "@douyinfe/semi-icons";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleHelpDrawerVisible } from "../store/codeHelp.store";
-import { languages } from "../utils/constant";
-import Icon from "../icons";
+import { languages } from "../../utils/constant";
+import Icon from "../../icons";
 
 const CodeHelp = () => {
   // store

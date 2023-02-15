@@ -1,10 +1,10 @@
 import { Toast } from "@douyinfe/semi-ui";
 import { createSlice } from "@reduxjs/toolkit";
-import { create, modify, remove } from "../utils/code";
+import { create, modify, remove } from "../../utils/code";
 import dayjs from "dayjs";
-import { getLocalStorage } from "../utils/storage";
+import { getLocalStorage } from "../../utils/storage";
 import hljs from "highlight.js";
-import { languages } from "../utils/constant";
+import { languages } from "../../utils/constant";
 
 export const CodeEditSlice = createSlice({
   name: "edit",

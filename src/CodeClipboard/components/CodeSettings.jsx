@@ -34,7 +34,7 @@ import {
   updateMaxVolumn,
   updateUsedVolumn,
 } from "../store/storage.store";
-import { removeLocalStorage } from "../utils/storage";
+import { removeLocalStorage } from "../../utils/storage";
 import { useRef } from "react";
 
 const CodeSettings = () => {
