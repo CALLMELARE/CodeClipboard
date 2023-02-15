@@ -24,6 +24,7 @@ import {
   toggleEditModalVisible,
 } from "./store/codeEdit.store";
 import { changeKeyword } from "./store/storage.store";
+import { NavLink } from "react-router-dom";
 
 const { Header, Footer, Content } = Layout;
 
@@ -44,7 +45,11 @@ const CodeClipboard = () => {
           position={"bottomLeft"}
           render={
             <Dropdown.Menu>
-              <Dropdown.Item>Text Converter</Dropdown.Item>
+              <Dropdown.Item>
+                <NavLink to="converter" className={"navlink"}>
+                  Text Converter
+                </NavLink>
+              </Dropdown.Item>
             </Dropdown.Menu>
           }
         >

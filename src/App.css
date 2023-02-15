@@ -139,7 +139,12 @@ body {
   color: #e0e0e0;
 }
 
-.cc-search{
+.cc-search {
   overflow: hidden;
   transition: all 0.3s;
+}
+
+.navlink {
+  text-decoration: none;
+  color: var(--semi-color-text-0);
 }

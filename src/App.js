@@ -1,11 +1,12 @@
-import CodeClipboard from "./CodeClipboard";
-import "./App.css";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import init from "./utils/init";
-init();
+import "./App.css";
+import routes from "./router";
+
+const router = createBrowserRouter(routes);
 
 function App() {
-  return <CodeClipboard />;
+  return <RouterProvider router={router} />;
 }
 
 export default App;

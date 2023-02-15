@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 
 import { Layout, Dropdown } from "@douyinfe/semi-ui";
 import {} from "@douyinfe/semi-icons";
+import { NavLink } from "react-router-dom";
 
 const { Header, Footer, Content } = Layout;
 
-const CodeClipboard = () => {
+const TextConverter = () => {
   return (
     <Layout>
       <Header className="cc-header">
@@ -14,7 +15,11 @@ const CodeClipboard = () => {
           position={"bottomLeft"}
           render={
             <Dropdown.Menu>
-              <Dropdown.Item>Code Clipboard</Dropdown.Item>
+              <Dropdown.Item>
+                <NavLink to="/" className={"navlink"}>
+                  Code Clipboard
+                </NavLink>
+              </Dropdown.Item>
             </Dropdown.Menu>
           }
         >
@@ -28,4 +33,4 @@ const CodeClipboard = () => {
   );
 };
 
-export default CodeClipboard;
+export default TextConverter;
