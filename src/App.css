@@ -156,10 +156,29 @@ body {
 }
 
 .tc-result-card {
+  padding: 16px;
 }
 
 .tc-result-card-label {
+  font-size: 12px;
+  color: #a9a9a9;
 }
 
 .tc-result-card-text {
+  padding: 8px 0;
+  color: var(--semi-color-text-0);
+}
+
+.tc-result-part {
+  margin-top: 16px;
+  border-radius: 5px;
+}
+
+.tc-result-part-label {
+  padding: 16px;
+}
+
+.tc-result-part-content {
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
 }
