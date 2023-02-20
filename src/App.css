@@ -173,6 +173,10 @@ body {
 .tc-result-card-text {
   padding: 8px 0;
   color: var(--semi-color-text-0);
+  white-space: pre-wrap;
+  word-break: break-all;
+  overflow-y: auto;
+  max-height: 100px;
 }
 
 .tc-result-part {
