@@ -1,3 +1,4 @@
+import { useSelector, useDispatch } from "react-redux";
 import {
   capitalize,
   camelCase,
@@ -9,76 +10,43 @@ import {
 
 import ResultCard from "./ResultCard";
 import ResultPart from "./ResultPart";
+import { useEffect, useState, useCallback } from "react";
+import Converter from "../utils/converter";
 
 const ResultMatrix = ({ origin = "" }) => {
-  const allUpperCfg = {
-    label: "全部大写",
-    text: origin.toLocaleUpperCase(),
-  };
+  const [state, setState] = useState({});
+  const [matrix, setMatrix] = useState();
 
-  const allLowerCfg = {
-    label: "全部小写",
-    text: origin.toLocaleLowerCase(),
-  };
+  // store
+  const { matrixMenu, matrixBlackList } = useSelector((s) => s.matrix);
 
-  const upperFirstCfg = {
-    label: "行首大写",
-    text: capitalize(origin),
-  };
-
-  const startCaseCfg = {
-    label: "词首大写",
-    text: startCase(origin),
-  };
-
-  const camelCaseCfg = {
-    label: "驼峰",
-    text: camelCase(origin),
-  };
-
-  const kebabCaseCfg = {
-    label: "短横线连接",
-    text: kebabCase(origin),
-  };
-
-  const snakeCaseCfg = {
-    label: "下划线连接",
-    text: snakeCase(origin),
-  };
-
-  const toNumberCfg = {
-    label: "数值",
-    text: isNaN(Number(origin)) ? "不适用" : Number(origin),
-  };
-
-  const wordsCfg = {
-    label: "单词抽取",
-    text: words(origin).length > 0 ? JSON.stringify(words(origin)) : null,
-  };
-
-  const Base64Encode = {
-    label: "加密",
-    text: origin,
-  };
-
-  return (
-    <div className="tc-result-matrix">
-      <ResultPart label="常用文本转换">
-        <ResultCard {...allUpperCfg} />
-        <ResultCard {...allLowerCfg} />
-        <ResultCard {...upperFirstCfg} />
-        <ResultCard {...startCaseCfg} />
-        <ResultCard {...camelCaseCfg} />
-        <ResultCard {...kebabCaseCfg} />
-        <ResultCard {...snakeCaseCfg} />
-        <ResultCard {...toNumberCfg} />
-        <ResultCard {...wordsCfg} />
-      </ResultPart>
-      <ResultPart label="Base64">
-        <ResultCard {...Base64Encode} />
-      </ResultPart>
-    </div>
+  const MatrixRender = useCallback(
+    (data, origin) => {
+      return data.map((item) => {
+        if (item.children) {
+          return (
+            <ResultPart label={item.text}>
+              {MatrixRender(item.children, origin)}
+            </ResultPart>
+          );
+        } else if (matrixBlackList.indexOf(item.code) === -1) {
+          return (
+            <ResultCard
+              label={item.text}
+              text={Converter({ code: item.code, origin })}
+            />
+          );
+        }
+      });
+    },
+    [matrixBlackList]
   );
+
+  useEffect(() => {
+    setMatrix(MatrixRender(matrixMenu, origin));
+  }, [MatrixRender, matrixBlackList, matrixMenu, origin]);
+
+  return <div className="tc-result-matrix">{matrix}</div>;
 };
 
 export default ResultMatrix;

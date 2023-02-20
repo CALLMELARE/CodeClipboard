@@ -159,6 +159,12 @@ body {
   padding: 16px;
 }
 
+.tc-result-card:hover {
+  border-radius: 6px;
+  background: rgba(28, 31, 35, 0.08);
+  cursor: pointer;
+}
+
 .tc-result-card-label {
   font-size: 12px;
   color: #a9a9a9;

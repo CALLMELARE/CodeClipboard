@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-import { Layout, Dropdown, TextArea } from "@douyinfe/semi-ui";
-import {} from "@douyinfe/semi-icons";
+import { Layout, Dropdown, TextArea, Button } from "@douyinfe/semi-ui";
+import { IconSetting } from "@douyinfe/semi-icons";
 import { NavLink } from "react-router-dom";
 import ResultMatrix from "./components/ResultMatrix";
 
@@ -29,7 +29,14 @@ const TextConverter = () => {
         >
           <span className="logo">Text Converter</span>
         </Dropdown>
-        <span className="func"></span>
+        <span className="func">
+          <Button
+            theme="borderless"
+            style={{ marginRight: "8px" }}
+            onClick={() => {}}
+            icon={<IconSetting />}
+          ></Button>
+        </span>
       </Header>
       <Content style={{ padding: "16px" }}>
         <div className="tc-textarea">
