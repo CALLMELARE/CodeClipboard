@@ -1,12 +1,4 @@
 import { useSelector, useDispatch } from "react-redux";
-import {
-  capitalize,
-  camelCase,
-  kebabCase,
-  snakeCase,
-  startCase,
-  words,
-} from "lodash-es";
 
 import ResultCard from "./ResultCard";
 import ResultPart from "./ResultPart";
@@ -19,6 +11,7 @@ const ResultMatrix = ({ origin = "" }) => {
 
   // store
   const { matrixMenu, matrixBlackList } = useSelector((s) => s.matrix);
+  const {} = useSelector((s) => s.settings);
 
   const MatrixRender = useCallback(
     (data, origin) => {
