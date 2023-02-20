@@ -6,6 +6,7 @@ import {
   startCase,
   words,
 } from "lodash-es";
+import { Base64 } from "js-base64";
 import { MATRIX_CODE } from "./constant";
 
 const Converter = ({ code = "", origin = "" }) => {
@@ -46,11 +47,19 @@ const Converter = ({ code = "", origin = "" }) => {
   };
 
   const base64Encode = (origin) => {
-    return origin;
+    let text = "不适用";
+    try {
+      text = Base64.encode(origin);
+    } catch (e) {}
+    return text;
   };
 
   const base64Decode = (origin) => {
-    return origin;
+    let text = "不适用";
+    try {
+      text = Base64.decode(origin);
+    } catch (e) {}
+    return text;
   };
 
   switch (code) {
