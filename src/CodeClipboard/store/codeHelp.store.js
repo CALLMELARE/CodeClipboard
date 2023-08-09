@@ -1,18 +1,18 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 export const CodeHelpSlice = createSlice({
-  name: "help",
-  initialState: {
-    behavior: {
-      helpDrawerVisible: false,
+    initialState: {
+        behavior: {
+            helpDrawerVisible: false,
+        },
     },
-  },
-  reducers: {
-    toggleHelpDrawerVisible: (s) => {
-      const prev = s.behavior.helpDrawerVisible;
-      s.behavior.helpDrawerVisible = !prev;
+    name: 'help',
+    reducers: {
+        toggleHelpDrawerVisible: (s) => {
+            const prev = s.behavior.helpDrawerVisible;
+            s.behavior.helpDrawerVisible = !prev;
+        },
     },
-  },
 });
 
 export const { toggleHelpDrawerVisible } = CodeHelpSlice.actions;

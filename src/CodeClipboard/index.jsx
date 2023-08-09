@@ -1,16 +1,19 @@
-import { Provider, useSelector, useDispatch } from "react-redux";
-import CodeClipboard from "./CodeClipboard";
-import store from "./store";
+import React from 'react';
+import { Provider } from 'react-redux';
 
-import init from "../utils/init";
+import init from '../utils/init';
+
+import CodeClipboard from './CodeClipboard';
+import store from './store';
+
 init();
 
-const Home = () => {
-  return (
-    <Provider store={store}>
-      <CodeClipboard />
-    </Provider>
-  );
-};
+function Home() {
+    return (
+        <Provider store={store}>
+            <CodeClipboard />
+        </Provider>
+    );
+}
 
 export default Home;

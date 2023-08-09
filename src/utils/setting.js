@@ -1,33 +1,31 @@
-import { getLocalStorage, setLocalStorage } from "./storage";
-const getAllCfg = () => {
-  return new Promise((resolve, reject) => {
-    const cfg = getLocalStorage("config");
-    if (cfg) {
-      resolve(cfg);
-    } else {
-      reject();
-    }
-  });
-};
+import { getLocalStorage, setLocalStorage } from './storage';
 
-const getCfg = (key) => {
-  return new Promise((resolve, reject) => {
-    const cfg = getLocalStorage("config");
-    if (cfg) {
-      resolve(cfg[`${key}`]);
-    }
-  });
-};
+const getAllCfg = () =>
+    new Promise((resolve, reject) => {
+        const cfg = getLocalStorage('config');
+        if (cfg) {
+            resolve(cfg);
+        } else {
+            reject();
+        }
+    });
 
-const setCfg = (key, value) => {
-  return new Promise((resolve, reject) => {
-    const cfg = getLocalStorage("config");
-    if (cfg) {
-      cfg[`${key}`] = value;
-      setLocalStorage("config", cfg);
-      resolve();
-    }
-  });
-};
+const getCfg = (key) =>
+    new Promise((resolve) => {
+        const cfg = getLocalStorage('config');
+        if (cfg) {
+            resolve(cfg[`${key}`]);
+        }
+    });
+
+const setCfg = (key, value) =>
+    new Promise((resolve) => {
+        const cfg = getLocalStorage('config');
+        if (cfg) {
+            cfg[`${key}`] = value;
+            setLocalStorage('config', cfg);
+            resolve();
+        }
+    });
 
 export { getAllCfg, setCfg, getCfg };

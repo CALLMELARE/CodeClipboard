@@ -1,45 +1,37 @@
-import { useSelector, useDispatch } from "react-redux";
+/* eslint-disable react/prop-types */
+import React, { useCallback, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
-import ResultCard from "./ResultCard";
-import ResultPart from "./ResultPart";
-import { useEffect, useState, useCallback } from "react";
-import Converter from "../utils/converter";
+import Converter from '../utils/converter';
 
-const ResultMatrix = ({ origin = "" }) => {
-  const [state, setState] = useState({});
-  const [matrix, setMatrix] = useState();
+import ResultCard from './ResultCard';
+import ResultPart from './ResultPart';
 
-  // store
-  const { matrixMenu, matrixBlackList } = useSelector((s) => s.matrix);
-  const {} = useSelector((s) => s.settings);
+function ResultMatrix({ origin = '' }) {
+    const [matrix, setMatrix] = useState();
 
-  const MatrixRender = useCallback(
-    (data, origin) => {
-      return data.map((item) => {
-        if (item.children) {
-          return (
-            <ResultPart label={item.text}>
-              {MatrixRender(item.children, origin)}
-            </ResultPart>
-          );
-        } else if (matrixBlackList.indexOf(item.code) === -1) {
-          return (
-            <ResultCard
-              label={item.text}
-              text={Converter({ code: item.code, origin })}
-            />
-          );
-        }
-      });
-    },
-    [matrixBlackList]
-  );
+    // store
+    const { matrixMenu, matrixBlackList } = useSelector((s) => s.matrix);
 
-  useEffect(() => {
-    setMatrix(MatrixRender(matrixMenu, origin));
-  }, [MatrixRender, matrixBlackList, matrixMenu, origin]);
+    const MatrixRender = useCallback(
+        (data, origin) =>
+            data.map((item) => {
+                if (item.children) {
+                    return <ResultPart label={item.text}>{MatrixRender(item.children, origin)}</ResultPart>;
+                } else if (matrixBlackList.indexOf(item.code) === -1) {
+                    return <ResultCard label={item.text} text={Converter({ code: item.code, origin })} />;
+                }
 
-  return <div className="tc-result-matrix">{matrix}</div>;
-};
+                return null;
+            }),
+        [matrixBlackList],
+    );
+
+    useEffect(() => {
+        setMatrix(MatrixRender(matrixMenu, origin));
+    }, [MatrixRender, matrixBlackList, matrixMenu, origin]);
+
+    return <div className="tc-result-matrix">{matrix}</div>;
+}
 
 export default ResultMatrix;
